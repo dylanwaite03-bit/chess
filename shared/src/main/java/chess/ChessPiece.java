@@ -1,5 +1,6 @@
 package chess;
 
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
@@ -131,7 +132,119 @@ public class ChessPiece {
             }
         }
         //end king
+        if (this.type== PieceType.QUEEN){
+            ChessPosition direction=new ChessPosition(myPosition.getRow()+1,myPosition.getColumn());
+            while (1<=direction.getRow() && 8>=direction.getRow() && 1<=direction.getColumn() && 8>=direction.getColumn()){
+                if(board.getPiece(direction)==null){
+                    moves.add(new ChessMove(myPosition,direction,null));}
+                else if(board.getPiece(direction).getTeamColor()!=this.getTeamColor()){
+                    moves.add(new ChessMove(myPosition,direction,null));
+                    break;
+                }
+                else{
+                    break;
+                }
+                direction=new ChessPosition(direction.getRow()+1,direction.getColumn());
+            }
 
+            direction=new ChessPosition(myPosition.getRow()-1,myPosition.getColumn());
+            while (1<=direction.getRow() && 8>=direction.getRow() && 1<=direction.getColumn() && 8>=direction.getColumn()){
+                if(board.getPiece(direction)==null){
+                    moves.add(new ChessMove(myPosition,direction,null));}
+                else if(board.getPiece(direction).getTeamColor()!=this.getTeamColor()){
+                    moves.add(new ChessMove(myPosition,direction,null));
+                    break;
+                }
+                else{
+                    break;
+                }
+                direction=new ChessPosition(direction.getRow()-1,direction.getColumn());
+            }
+
+            direction=new ChessPosition(myPosition.getRow(),myPosition.getColumn()+1);
+            while (1<=direction.getRow() && 8>=direction.getRow() && 1<=direction.getColumn() && 8>=direction.getColumn()){
+                if(board.getPiece(direction)==null){
+                    moves.add(new ChessMove(myPosition,direction,null));}
+                else if(board.getPiece(direction).getTeamColor()!=this.getTeamColor()){
+                    moves.add(new ChessMove(myPosition,direction,null));
+                    break;
+                }
+                else{
+                    break;
+                }
+                direction=new ChessPosition(direction.getRow(),direction.getColumn()+1);
+            }
+
+            direction=new ChessPosition(myPosition.getRow(),myPosition.getColumn()-1);
+            while (1<=direction.getRow() && 8>=direction.getRow() && 1<=direction.getColumn() && 8>=direction.getColumn()){
+                if(board.getPiece(direction)==null){
+                    moves.add(new ChessMove(myPosition,direction,null));}
+                else if(board.getPiece(direction).getTeamColor()!=this.getTeamColor()){
+                    moves.add(new ChessMove(myPosition,direction,null));
+                    break;
+                }
+                else{
+                    break;
+                }
+                direction=new ChessPosition(direction.getRow(),direction.getColumn()-1);
+            }
+
+            direction=new ChessPosition(myPosition.getRow()+1,myPosition.getColumn()+1);
+            while (1<=direction.getRow() && 8>=direction.getRow() && 1<=direction.getColumn() && 8>=direction.getColumn()){
+                if(board.getPiece(direction)==null){
+                    moves.add(new ChessMove(myPosition,direction,null));}
+                else if(board.getPiece(direction).getTeamColor()!=this.getTeamColor()){
+                    moves.add(new ChessMove(myPosition,direction,null));
+                    break;
+                }
+                else{
+                    break;
+                }
+                direction=new ChessPosition(direction.getRow()+1,direction.getColumn()+1);
+            }
+
+            direction=new ChessPosition(myPosition.getRow()+1,myPosition.getColumn()-1);
+            while (1<=direction.getRow() && 8>=direction.getRow() && 1<=direction.getColumn() && 8>=direction.getColumn()){
+                if(board.getPiece(direction)==null){
+                    moves.add(new ChessMove(myPosition,direction,null));}
+                else if(board.getPiece(direction).getTeamColor()!=this.getTeamColor()){
+                    moves.add(new ChessMove(myPosition,direction,null));
+                    break;
+                }
+                else{
+                    break;
+                }
+                direction=new ChessPosition(direction.getRow()+1,direction.getColumn()-1);
+            }
+
+            direction=new ChessPosition(myPosition.getRow()-1,myPosition.getColumn()+1);
+            while (1<=direction.getRow() && 8>=direction.getRow() && 1<=direction.getColumn() && 8>=direction.getColumn()){
+                if(board.getPiece(direction)==null){
+                    moves.add(new ChessMove(myPosition,direction,null));}
+                else if(board.getPiece(direction).getTeamColor()!=this.getTeamColor()){
+                    moves.add(new ChessMove(myPosition,direction,null));
+                    break;
+                }
+                else{
+                    break;
+                }
+                direction=new ChessPosition(direction.getRow()-1,direction.getColumn()+1);
+            }
+
+            direction=new ChessPosition(myPosition.getRow()-1,myPosition.getColumn()-1);
+            while (1<=direction.getRow() && 8>=direction.getRow() && 1<=direction.getColumn() && 8>=direction.getColumn()){
+                if(board.getPiece(direction)==null){
+                    moves.add(new ChessMove(myPosition,direction,null));}
+                else if(board.getPiece(direction).getTeamColor()!=this.getTeamColor()){
+                    moves.add(new ChessMove(myPosition,direction,null));
+                    break;
+                }
+                else{
+                    break;
+                }
+                direction=new ChessPosition(direction.getRow()-1,direction.getColumn()-1);
+            }
+        }
         //queen
 
         return moves;
