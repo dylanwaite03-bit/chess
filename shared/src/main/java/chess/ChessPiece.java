@@ -366,6 +366,84 @@ public class ChessPiece {
         }
         //end bishop
 
+        //knight
+        if(this.type ==PieceType.KNIGHT) {
+            ChessPosition direction=new ChessPosition(myPosition.getRow()+1,myPosition.getColumn()+2);
+            if (1<=direction.getRow() && 8>=direction.getRow() && 1<=direction.getColumn() && 8>=direction.getColumn()){
+                if(board.getPiece(direction)==null){
+                    moves.add(new ChessMove(myPosition,direction,null));}
+                else if(board.getPiece(direction).getTeamColor()!=this.getTeamColor()){
+                    moves.add(new ChessMove(myPosition,direction,null));
+                }
+            }
+
+            direction=new ChessPosition(myPosition.getRow()+1,myPosition.getColumn()-2);
+            if (1<=direction.getRow() && 8>=direction.getRow() && 1<=direction.getColumn() && 8>=direction.getColumn()){
+                if(board.getPiece(direction)==null){
+                    moves.add(new ChessMove(myPosition,direction,null));}
+                else if(board.getPiece(direction).getTeamColor()!=this.getTeamColor()){
+                    moves.add(new ChessMove(myPosition,direction,null));
+                }
+            }
+
+            direction=new ChessPosition(myPosition.getRow()-1,myPosition.getColumn()+2);
+            if (1<=direction.getRow() && 8>=direction.getRow() && 1<=direction.getColumn() && 8>=direction.getColumn()){
+                if(board.getPiece(direction)==null){
+                    moves.add(new ChessMove(myPosition,direction,null));}
+                else if(board.getPiece(direction).getTeamColor()!=this.getTeamColor()){
+                    moves.add(new ChessMove(myPosition,direction,null));
+                }
+            }
+
+            direction=new ChessPosition(myPosition.getRow()-1,myPosition.getColumn()-2);
+            if (1<=direction.getRow() && 8>=direction.getRow() && 1<=direction.getColumn() && 8>=direction.getColumn()){
+                if(board.getPiece(direction)==null){
+                    moves.add(new ChessMove(myPosition,direction,null));}
+                else if(board.getPiece(direction).getTeamColor()!=this.getTeamColor()){
+                    moves.add(new ChessMove(myPosition,direction,null));
+                }
+            }
+
+            direction=new ChessPosition(myPosition.getRow()+2,myPosition.getColumn()+1);
+            if (1<=direction.getRow() && 8>=direction.getRow() && 1<=direction.getColumn() && 8>=direction.getColumn()){
+                if(board.getPiece(direction)==null){
+                    moves.add(new ChessMove(myPosition,direction,null));}
+                else if(board.getPiece(direction).getTeamColor()!=this.getTeamColor()){
+                    moves.add(new ChessMove(myPosition,direction,null));
+                }
+            }
+
+            direction=new ChessPosition(myPosition.getRow()+2,myPosition.getColumn()-1);
+            if (1<=direction.getRow() && 8>=direction.getRow() && 1<=direction.getColumn() && 8>=direction.getColumn()){
+                if(board.getPiece(direction)==null){
+                    moves.add(new ChessMove(myPosition,direction,null));}
+                else if(board.getPiece(direction).getTeamColor()!=this.getTeamColor()){
+                    moves.add(new ChessMove(myPosition,direction,null));
+                }
+            }
+
+            direction=new ChessPosition(myPosition.getRow()-2,myPosition.getColumn()+1);
+            if (1<=direction.getRow() && 8>=direction.getRow() && 1<=direction.getColumn() && 8>=direction.getColumn()){
+                if(board.getPiece(direction)==null){
+                    moves.add(new ChessMove(myPosition,direction,null));}
+                else if(board.getPiece(direction).getTeamColor()!=this.getTeamColor()){
+                    moves.add(new ChessMove(myPosition,direction,null));
+                }
+            }
+
+            direction=new ChessPosition(myPosition.getRow()-2,myPosition.getColumn()-1);
+            if (1<=direction.getRow() && 8>=direction.getRow() && 1<=direction.getColumn() && 8>=direction.getColumn()){
+                if(board.getPiece(direction)==null){
+                    moves.add(new ChessMove(myPosition,direction,null));}
+                else if(board.getPiece(direction).getTeamColor()!=this.getTeamColor()){
+                    moves.add(new ChessMove(myPosition,direction,null));
+                }
+            }
+
+        }
+
+        //pawn
+
         return moves;
 
     }
