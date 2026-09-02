@@ -305,6 +305,66 @@ public class ChessPiece {
                 direction=new ChessPosition(direction.getRow(),direction.getColumn()-1);
             }
         }
+        //end rook
+        //bishop
+        if(this.type==PieceType.BISHOP){
+            ChessPosition direction=new ChessPosition(myPosition.getRow()+1,myPosition.getColumn()+1);
+            while (1<=direction.getRow() && 8>=direction.getRow() && 1<=direction.getColumn() && 8>=direction.getColumn()){
+                if(board.getPiece(direction)==null){
+                    moves.add(new ChessMove(myPosition,direction,null));}
+                else if(board.getPiece(direction).getTeamColor()!=this.getTeamColor()){
+                    moves.add(new ChessMove(myPosition,direction,null));
+                    break;
+                }
+                else{
+                    break;
+                }
+                direction=new ChessPosition(direction.getRow()+1,direction.getColumn()+1);
+            }
+
+            direction=new ChessPosition(myPosition.getRow()-1,myPosition.getColumn()+1);
+            while (1<=direction.getRow() && 8>=direction.getRow() && 1<=direction.getColumn() && 8>=direction.getColumn()){
+                if(board.getPiece(direction)==null){
+                    moves.add(new ChessMove(myPosition,direction,null));}
+                else if(board.getPiece(direction).getTeamColor()!=this.getTeamColor()){
+                    moves.add(new ChessMove(myPosition,direction,null));
+                    break;
+                }
+                else{
+                    break;
+                }
+                direction=new ChessPosition(direction.getRow()-1,direction.getColumn()+1);
+            }
+
+            direction=new ChessPosition(myPosition.getRow()+1,myPosition.getColumn()-1);
+            while (1<=direction.getRow() && 8>=direction.getRow() && 1<=direction.getColumn() && 8>=direction.getColumn()){
+                if(board.getPiece(direction)==null){
+                    moves.add(new ChessMove(myPosition,direction,null));}
+                else if(board.getPiece(direction).getTeamColor()!=this.getTeamColor()){
+                    moves.add(new ChessMove(myPosition,direction,null));
+                    break;
+                }
+                else{
+                    break;
+                }
+                direction=new ChessPosition(direction.getRow()+1,direction.getColumn()-1);
+            }
+
+            direction=new ChessPosition(myPosition.getRow()-1,myPosition.getColumn()-1);
+            while (1<=direction.getRow() && 8>=direction.getRow() && 1<=direction.getColumn() && 8>=direction.getColumn()){
+                if(board.getPiece(direction)==null){
+                    moves.add(new ChessMove(myPosition,direction,null));}
+                else if(board.getPiece(direction).getTeamColor()!=this.getTeamColor()){
+                    moves.add(new ChessMove(myPosition,direction,null));
+                    break;
+                }
+                else{
+                    break;
+                }
+                direction=new ChessPosition(direction.getRow()-1,direction.getColumn()-1);
+            }
+        }
+        //end bishop
 
         return moves;
 
