@@ -588,6 +588,7 @@ public class ChessPiece {
 //end pawn
 
         return moves;
+//end function
 
     }
 
