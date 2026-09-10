@@ -73,6 +73,33 @@ public class ChessGame {
     public void makeMove(ChessMove move) throws InvalidMoveException {
         ChessPosition startposition=move.getStartPosition();
         ChessPosition endposition=move.getEndPosition();
+
+        ChessPiece piece=board.getPiece(startposition);
+
+        if (piece == null) {
+            throw new InvalidMoveException();
+        }
+
+        if (piece.getTeamColor() != teamTurn) {
+            throw new InvalidMoveException();
+        }
+
+        Collection<ChessMove> validmoves= validMoves(startposition);
+
+        if (!validmoves.contains(move)) {
+            throw new InvalidMoveException();
+        }
+        board.removePiece(startposition);
+        board.removePiece(endposition);
+        board.addPiece(endposition, piece);
+
+        if (teamTurn == TeamColor.WHITE) {
+            teamTurn = TeamColor.BLACK;
+        }
+        else {
+            teamTurn = TeamColor.WHITE;
+        }
+
     }
 
     /**
