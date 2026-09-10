@@ -13,6 +13,7 @@ public class ChessGame {
 
     private ChessBoard board;
     private TeamColor teamTurn;
+
     public ChessGame() {
         this.board=new ChessBoard();
         board.resetBoard();
@@ -23,7 +24,7 @@ public class ChessGame {
      * @return Which team's turn it is
      */
     public TeamColor getTeamTurn() {
-        throw new RuntimeException("Not implemented");
+        return teamTurn;
     }
 
     /**
@@ -51,7 +52,9 @@ public class ChessGame {
      * startPosition
      */
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
+        ChessPiece piece=board.getPiece(startPosition);
 
+        return piece.pieceMoves(board,startPosition);
     }
 
     /**
