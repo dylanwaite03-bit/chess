@@ -166,45 +166,17 @@ public class ChessGame {
      * @return True if the specified team is in checkmate
      */
     public boolean isInCheckmate(TeamColor teamColor) {
-        ArrayList<ChessPosition> positions= new ArrayList<>();
+       if (!isInCheck(teamColor)){
+           return false;
+       }
+
         for (int row = 1; row <= 8; row++) {
             for (int column = 1; column <= 8; column++) {
-                positions.add(new ChessPosition(row, column));
+                ChessPosition position=new ChessPosition(row,column);
+                ChessPiece piece=board.getPiece(position);
+
             }
         }
-
-        ArrayList<ChessMove> enemymoves=new ArrayList<>();
-        ChessPosition kingposition= new ChessPosition(0,0);
-        for(ChessPosition position : positions){
-            ChessPiece piece=board.getPiece(position);
-            if (piece!=null){
-                if (piece.getTeamColor()!=teamColor){
-                    Collection<ChessMove> piecemoves=piece.pieceMoves(board,position);
-                    enemymoves.addAll(piecemoves);
-                }
-                else if(piece.getPieceType()== ChessPiece.PieceType.KING && piece.getTeamColor()==teamColor){
-                    kingposition=position;
-                }
-            }
-        }
-
-        ArrayList<ChessMove> friendmoves=new ArrayList<>();
-        for(ChessPosition position : positions){
-            ChessPiece piece=board.getPiece(position);
-            if (piece!=null){
-                if (piece.getTeamColor()==teamColor && piece.getPieceType()!= ChessPiece.PieceType.KING){
-                    Collection<ChessMove> piecemoves=piece.pieceMoves(board,position);
-                    friendmoves.addAll(piecemoves);
-                }
-            }
-        }
-
-        Collection<ChessMove> kingmoves=new ArrayList<>();
-        kingmoves=board.getPiece(kingposition).pieceMoves(board,kingposition);
-
-
-
-        return false;
     }
     /**
      * Determines if the given team is in stalemate, which here is defined as having
