@@ -174,9 +174,17 @@ public class ChessGame {
             for (int column = 1; column <= 8; column++) {
                 ChessPosition position=new ChessPosition(row,column);
                 ChessPiece piece=board.getPiece(position);
+                if (piece!=null && piece.getTeamColor()==teamColor){
+                    Collection<ChessMove> validmoves= validMoves(position);
+                    if(validmoves!=null && !validmoves.isEmpty()){
+                        return false;
+                    }
+                }
 
             }
         }
+
+        return true;
     }
     /**
      * Determines if the given team is in stalemate, which here is defined as having
