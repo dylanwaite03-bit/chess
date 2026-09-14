@@ -20,6 +20,7 @@ public class ChessGame {
     private boolean whiteRightRookMoved = false;
     private boolean blackLeftRookMoved = false;
     private boolean blackRightRookMoved = false;
+    private ChessMove lastmove =null;
 
     public ChessGame() {
         this.board=new ChessBoard();
@@ -135,6 +136,30 @@ public class ChessGame {
             }
         }
 
+        if(piece.getPieceType()== ChessPiece.PieceType.PAWN && lastmove!=null){
+            ChessPosition laststart=lastmove.getStartPosition();
+            ChessPosition lastend=lastmove.getEndPosition();
+            ChessPiece lastpiece=board.getPiece(lastend);
+            if (lastpiece != null &&
+                    lastpiece.getPieceType() == ChessPiece.PieceType.PAWN &&
+                    (laststart.getRow() - lastend.getRow() == 2 ||
+                            lastend.getRow() - laststart.getRow() == 2) &&
+                    lastend.getRow() == startPosition.getRow() &&
+                    (lastend.getColumn() - startPosition.getColumn() == 1 ||
+                            startPosition.getColumn() - lastend.getColumn() == 1)){
+
+                int direction=0;
+                if (piece.getTeamColor()==TeamColor.WHITE){
+                    direction=1;
+                }
+                if (piece.getTeamColor()==TeamColor.BLACK){
+                    direction=-1;
+                }
+                ChessPosition endposition=new ChessPosition(startPosition.getRow()+direction, lastend.getColumn());
+                validmoves.add(new ChessMove(startPosition,endposition,null));
+            }
+        }
+
         for (ChessMove move : pieceMoves) {
 
             ChessPiece capturedPiece = board.getPiece(move.getEndPosition());
@@ -210,6 +235,12 @@ public class ChessGame {
             }
         }
 
+        if (piece.getPieceType()== ChessPiece.PieceType.PAWN && startposition.getColumn()!=endposition.getColumn() &&
+        board.getPiece(endposition)==null){
+            board.removePiece(new ChessPosition(startposition.getRow(),endposition.getColumn()));
+
+        }
+
         board.removePiece(startposition);
         board.removePiece(endposition);
         if (piece.getPieceType() == ChessPiece.PieceType.KING &&
@@ -251,6 +282,7 @@ public class ChessGame {
         else {
             teamTurn = TeamColor.WHITE;
         }
+        lastmove=move;
 
     }
 
