@@ -14,6 +14,12 @@ public class ChessGame {
 
     private ChessBoard board;
     private TeamColor teamTurn;
+    private boolean whiteKingMoved = false;
+    private boolean blackKingMoved = false;
+    private boolean whiteLeftRookMoved = false;
+    private boolean whiteRightRookMoved = false;
+    private boolean blackLeftRookMoved = false;
+    private boolean blackRightRookMoved = false;
 
     public ChessGame() {
         this.board=new ChessBoard();
@@ -60,6 +66,21 @@ public class ChessGame {
             return null;
         }
         Collection<ChessMove> pieceMoves = piece.pieceMoves(board, startPosition);
+
+        if (piece.getPieceType()== ChessPiece.PieceType.KING){
+            int row= startPosition.getRow();
+            if(!isInCheck(piece.getTeamColor())){
+                if(board.getPiece(new ChessPosition(row,7))==null&& board.getPiece(new ChessPosition(row,7))==null){
+                    ChessPiece rook=board.getPiece(new ChessPosition(row, 8));
+                    if(rook!=null &&rook.getPieceType()== ChessPiece.PieceType.ROOK){
+                        validmoves.add(new ChessMove(startPosition,new ChessPosition(row,7),null));
+                    }
+
+                }
+            }
+
+
+        }
 
         for (ChessMove move : pieceMoves) {
 
@@ -110,6 +131,8 @@ public class ChessGame {
         }
         board.removePiece(startposition);
         board.removePiece(endposition);
+        if (piece.getPieceType()== ChessPiece.PieceType.KING)
+
         if (move.getPromotionPiece()!=null) {
             board.addPiece(endposition, new ChessPiece(piece.getTeamColor(), move.getPromotionPiece()));
         }
