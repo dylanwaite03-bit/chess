@@ -8,6 +8,8 @@ import dataaccess.MemoryUserDAO;
 import dataaccess.UserDAO;
 import handler.UserHandler;
 import service.UserService;
+import handler.ClearHandler;
+import service.ClearService;
 
 public class Server {
 
@@ -18,10 +20,15 @@ public class Server {
 
         UserDAO userDAO= new MemoryUserDAO();
         AuthDAO authDAO=new MemoryAuthDAO();
+
         UserService userService=new UserService(userDAO,authDAO);
         UserHandler userHandler=new UserHandler(userService);
-        javalin.post("/user", userHandler::register);
 
+        ClearService clearService=new ClearService(userDAO,authDAO);
+        ClearHandler clearHandler=new ClearHandler(clearService);
+
+        javalin.post("/user", userHandler::register);
+        javalin.post("/db",clearHandler::clear);
     }
 
     public int run(int desiredPort) {
