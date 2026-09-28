@@ -28,7 +28,7 @@ public class Server {
         ClearHandler clearHandler=new ClearHandler(clearService);
 
         javalin.post("/user", userHandler::register);
-        javalin.post("/db",clearHandler::clear);
+        javalin.delete("/db",clearHandler::clear);
     }
 
     public int run(int desiredPort) {
