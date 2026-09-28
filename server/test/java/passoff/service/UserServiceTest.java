@@ -4,6 +4,7 @@ import dataaccess.AuthDAO;
 import dataaccess.MemoryAuthDAO;
 import dataaccess.MemoryUserDAO;
 import dataaccess.UserDAO;
+import model.UserData;
 import org.junit.jupiter.api.Test;
 import service.RegisterRequest;
 import service.RegisterResult;
@@ -28,6 +29,19 @@ public class UserServiceTest {
         assertNotNull(result.authToken());
     }
 
+    @Test
+    public void registerAlreadyTaken() throws Exception{
+        UserDAO userDAO=new MemoryUserDAO();
+        AuthDAO authDAO=new MemoryAuthDAO();
 
+        UserService userService=new UserService(userDAO,authDAO);
+
+        UserData existinguser=new UserData("dylan","password","email@e.com");
+        userDAO.createUser(existinguser);
+
+        RegisterRequest request=new RegisterRequest("dylan","password","email@e.com");
+
+        assertThrows(Exception.class, () -> userService.register(request));
+    }
 
 }
