@@ -10,7 +10,7 @@ public class SessionHandler {
     private final SessionService sessionService;
     private final Gson gson=new Gson();
 
-    public SessionHandler(SessionService sessionService) throws Exception{
+    public SessionHandler(SessionService sessionService) {
         this.sessionService=sessionService;
     }
 

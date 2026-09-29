@@ -11,6 +11,8 @@ import io.javalin.json.JavalinGson;
 import service.UserService;
 import handler.ClearHandler;
 import service.ClearService;
+import handler.SessionHandler;
+import service.SessionService;
 
 public class Server {
 
@@ -30,10 +32,14 @@ public class Server {
         UserService userService=new UserService(userDAO,authDAO);
         UserHandler userHandler=new UserHandler(userService);
 
+        SessionService sessionService=new SessionService(userDAO, authDAO);
+        SessionHandler sessionHandler=new SessionHandler(sessionService);
+
         ClearService clearService=new ClearService(userDAO,authDAO);
         ClearHandler clearHandler=new ClearHandler(clearService);
 
         javalin.post("/user", userHandler::register);
+        javalin.post("/session", sessionHandler::login);
         javalin.delete("/db",clearHandler::clear);
     }
 
