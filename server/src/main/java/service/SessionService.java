@@ -34,7 +34,7 @@ public class SessionService {
         return new LoginResult(request.username(), authToken);
     }
 
-    public void Logout(String authtoken) throws Exception{
+    public void logout(String authtoken) throws Exception{
         AuthData authData= authDAO.getAuth(authtoken);
 
         if (authData==null){

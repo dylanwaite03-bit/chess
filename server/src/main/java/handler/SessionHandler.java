@@ -23,7 +23,7 @@ public class SessionHandler {
 
     public void logout(Context context) throws Exception{
         String authtoken=context.header("Authorization");
-        sessionService.Logout(authtoken);
+        sessionService.logout(authtoken);
         context.status(200);
     }
 }

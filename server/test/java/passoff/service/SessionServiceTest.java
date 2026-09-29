@@ -64,4 +64,28 @@ public class SessionServiceTest {
         assertThrows(Exception.class, () -> sessionService.login(request));
     }
 
+    @Test
+    public void logoutsuccessfull() throws Exception{
+        UserDAO userDAO=new MemoryUserDAO();
+        AuthDAO authDAO=new MemoryAuthDAO();
+
+        SessionService sessionService=new SessionService(userDAO,authDAO);
+        AuthData authData = new AuthData("token123", "dylan");
+
+        authDAO.createAuth(authData);
+        sessionService.logout("token123");
+
+        assertNull(authDAO.getAuth("token123"));
+    }
+
+    @Test
+    public void logoutinvalid()throws Exception{
+        UserDAO userDAO=new MemoryUserDAO();
+        AuthDAO authDAO=new MemoryAuthDAO();
+
+        SessionService sessionService=new SessionService(userDAO,authDAO);
+
+        assertThrows(Exception.class, () -> sessionService.logout("badtoken"));
+    }
+
 }

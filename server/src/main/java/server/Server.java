@@ -40,6 +40,7 @@ public class Server {
 
         javalin.post("/user", userHandler::register);
         javalin.post("/session", sessionHandler::login);
+        javalin.delete("/session",sessionHandler::logout);
         javalin.delete("/db",clearHandler::clear);
     }
 
