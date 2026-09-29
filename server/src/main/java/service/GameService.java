@@ -64,7 +64,16 @@ public class GameService {
                     authData.username(),game.game());
             gameDAO.updateGame(updatedGame);
         }
+    }
 
+    public ListGameResult listGames(String authToken) throws Exception{
+        AuthData authData=authDAO.getAuth(authToken);
+
+        if (authData==null){
+            throw new Exception("unauthorized");
+        }
+
+        return new ListGameResult(gameDAO.listGames());
     }
 
 }
