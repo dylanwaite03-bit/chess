@@ -3,7 +3,7 @@ package handler;
 
 import com.google.gson.Gson;
 import service.CreateGameRequest;
-import service.CreateGameRequest;
+
 import service.CreateGameResult;
 import service.GameService;
 
@@ -21,6 +21,7 @@ public class GameHandler {
         CreateGameRequest request= gson.fromJson(context.body(),CreateGameRequest.class);
         String authToken=context.header("Authorization");
         CreateGameResult result=gameService.createGame(request,authToken);
+
         context.json(result);
     }
 
