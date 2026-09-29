@@ -30,7 +30,22 @@ public class SessionServiceTest {
         LoginResult result=sessionService.login(request);
         assertEquals("dylan",result.username());
         assertNotNull(result.authToken());
+    }
 
+    @Test
+    public void wrongpasswordlogin() throws Exception{
+        UserDAO userDAO=new MemoryUserDAO();
+        AuthDAO authDAO=new MemoryAuthDAO();
+
+        SessionService sessionService=new SessionService(userDAO,authDAO);
+        UserData user= new UserData( "dylan",
+                "password",
+                "email@e.com");
+
+        userDAO.createUser(user);
+        LoginRequest request=new LoginRequest("dylan", "wrongpassword");
+
+        assertThrows(Exception.class, () -> sessionService.login(request));
     }
 
 }
