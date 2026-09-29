@@ -36,8 +36,8 @@ public class GameService {
         if (authData==null){
             throw new Exception("unauthorized");
         }
-        if(!request.playerColor().equals("WHITE") &&
-                !request.playerColor().equals("BLACK")){
+        if(!"WHITE".equals(request.playerColor()) &&
+                !"BLACK".equals(request.playerColor())){
             throw new Exception("bad request");
         }
 
