@@ -34,6 +34,16 @@ public class SessionService {
         return new LoginResult(request.username(), authToken);
     }
 
+    public void Logout(String authtoken) throws Exception{
+        AuthData authData= authDAO.getAuth(authtoken);
+
+        if (authData==null){
+            throw new Exception("unauthorized");
+        }
+
+        authDAO.deleteAuth(authtoken);
+    }
+
 
 }
 
