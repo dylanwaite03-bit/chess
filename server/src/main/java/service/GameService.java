@@ -49,12 +49,19 @@ public class GameService {
             if (game.whiteUsername()==null){
                 throw new Exception("already taken");
             }
+            GameData updatedGame=new GameData(game.gameId(),game.gameName(),authData.username(),
+                    game.blackUsername(),game.game());
+            gameDAO.updateGame(updatedGame);
         }
-        GameData updatedGame=new GameData(game.gameId(),game.gameName(),authData.username(),
-                game.blackUsername(),game.game());
 
-
-
+        if(request.playerColor().equals("BLACK")) {
+            if (game.blackUsername() == null) {
+                throw new Exception("already taken");
+            }
+            GameData updatedGame=new GameData(game.gameId(),game.gameName(),game.whiteUsername(),
+                    authData.username(),game.game());
+            gameDAO.updateGame(updatedGame);
+        }
 
     }
 
