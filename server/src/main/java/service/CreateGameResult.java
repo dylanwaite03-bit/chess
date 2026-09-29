@@ -1,3 +1,3 @@
 package service;
 
-public record CreateGameResult(String gameName) {}
+public record CreateGameResult(int gameName) {}
