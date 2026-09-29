@@ -48,4 +48,20 @@ public class SessionServiceTest {
         assertThrows(Exception.class, () -> sessionService.login(request));
     }
 
+    @Test
+    public void wrongusernamelogin() throws Exception{
+        UserDAO userDAO=new MemoryUserDAO();
+        AuthDAO authDAO=new MemoryAuthDAO();
+
+        SessionService sessionService=new SessionService(userDAO,authDAO);
+        UserData user= new UserData( "dylan",
+                "password",
+                "email@e.com");
+
+        userDAO.createUser(user);
+        LoginRequest request=new LoginRequest("dyl", "password");
+
+        assertThrows(Exception.class, () -> sessionService.login(request));
+    }
+
 }
