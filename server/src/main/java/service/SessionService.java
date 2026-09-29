@@ -17,6 +17,10 @@ public class SessionService {
     }
 
     public LoginResult login(LoginRequest request) throws Exception{
+        if (request.username()==null || request.password()==null){
+            throw new Exception("bad request");
+        }
+
         UserData user=userDAO.getUser(request.username());
 
         if (user==null){
