@@ -33,7 +33,14 @@ public class SessionHandler {
 
     public void logout(Context context) throws Exception{
         String authtoken=context.header("Authorization");
-        sessionService.logout(authtoken);
-        context.status(200);
+        try {
+            sessionService.logout(authtoken);
+            context.status(200);
+        }catch (Exception e){
+            if(e.getMessage().equals("unauthorized")){
+                context.status(401);
+                context.json("{\"message\":\"Error: unauthorized\"}");
+            }
+        }
     }
 }

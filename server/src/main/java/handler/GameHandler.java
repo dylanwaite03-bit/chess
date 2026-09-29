@@ -20,9 +20,19 @@ public class GameHandler {
     public void createGame(Context context) throws Exception{
         CreateGameRequest request= gson.fromJson(context.body(),CreateGameRequest.class);
         String authToken=context.header("Authorization");
-        CreateGameResult result=gameService.createGame(request,authToken);
-
-        context.json(result);
+        try {
+            CreateGameResult result = gameService.createGame(request, authToken);
+            context.json(result);
+        } catch (Exception e){
+            if(e.getMessage().equals("bad request")){
+                context.status(400);
+                context.json("{\"message\":\"Error: bad request\"}");
+            }
+            if(e.getMessage().equals("unauthorized")){
+                context.status(401);
+                context.json("{\"message\":\"Error: unauthorized\"}");
+            }
+        }
     }
 
 }
