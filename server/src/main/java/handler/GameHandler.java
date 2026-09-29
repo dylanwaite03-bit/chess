@@ -8,6 +8,7 @@ import service.CreateGameResult;
 import service.GameService;
 
 import io.javalin.http.Context;
+import service.JoinGameRequest;
 
 public class GameHandler {
     private final GameService gameService;
@@ -30,6 +31,28 @@ public class GameHandler {
             }
             if(e.getMessage().equals("unauthorized")){
                 context.status(401);
+                context.json("{\"message\":\"Error: unauthorized\"}");
+            }
+        }
+    }
+
+    public void joinGame(Context context)throws Exception{
+        JoinGameRequest request= gson.fromJson(context.body(),JoinGameRequest.class);
+        String authToken= context.header("Authorization");
+        try{
+            gameService.joinGame(request,authToken);
+            context.status(200);
+        }catch (Exception e){
+            if(e.getMessage().equals("bad request")){
+                context.status(400);
+                context.json("{\"message\":\"Error: bad request\"}");
+            }
+            if(e.getMessage().equals("unauthorized")){
+                context.status(401);
+                context.json("{\"message\":\"Error: unauthorized\"}");
+            }
+            if(e.getMessage().equals("already taken")){
+                context.status(403);
                 context.json("{\"message\":\"Error: unauthorized\"}");
             }
         }
