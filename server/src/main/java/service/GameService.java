@@ -38,15 +38,17 @@ public class GameService {
         }
         if(!request.playerColor().equals("WHITE") &&
                 !request.playerColor().equals("BLACK")){
-            throw new Exception("unauthorized");
+            throw new Exception("bad request");
         }
 
-        GameData game=gameDAO.getGame(request.gameId());
+        GameData game=gameDAO.getGame(request.gameID());
+
         if (game==null){
             throw new Exception("bad request");
         }
-        if(request.playerColor().equals("WHITE")){
-            if (game.whiteUsername()==null){
+
+        if("WHITE".equals(request.playerColor())){
+            if (game.whiteUsername()!=null){
                 throw new Exception("already taken");
             }
             GameData updatedGame=new GameData(game.gameId(),game.gameName(),authData.username(),
@@ -54,8 +56,8 @@ public class GameService {
             gameDAO.updateGame(updatedGame);
         }
 
-        if(request.playerColor().equals("BLACK")) {
-            if (game.blackUsername() == null) {
+        if("BLACK".equals(request.playerColor())) {
+            if (game.blackUsername() != null) {
                 throw new Exception("already taken");
             }
             GameData updatedGame=new GameData(game.gameId(),game.gameName(),game.whiteUsername(),

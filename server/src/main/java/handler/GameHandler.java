@@ -53,7 +53,7 @@ public class GameHandler {
             }
             if(e.getMessage().equals("already taken")){
                 context.status(403);
-                context.json("{\"message\":\"Error: unauthorized\"}");
+                context.json("{\"message\":\"Error: already taken\"}");
             }
         }
     }
