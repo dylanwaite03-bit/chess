@@ -31,4 +31,31 @@ public class GameService {
 
     }
 
+    public void joinGame(JoinGameRequest request, String authToken)throws Exception{
+        AuthData authData=authDAO.getAuth(authToken);
+        if (authData==null){
+            throw new Exception("unauthorized");
+        }
+        if(!request.playerColor().equals("WHITE") &&
+                !request.playerColor().equals("BLACK")){
+            throw new Exception("unauthorized");
+        }
+
+        GameData game=gameDAO.getGame(request.gameId());
+        if (game==null){
+            throw new Exception("bad request");
+        }
+        if(request.playerColor().equals("WHITE")){
+            if (game.whiteUsername()==null){
+                throw new Exception("already taken");
+            }
+        }
+        GameData updatedGame=new GameData(game.gameId(),game.gameName(),authData.username(),
+                game.blackUsername(),game.game());
+
+
+
+
+    }
+
 }
