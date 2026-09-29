@@ -16,8 +16,19 @@ public class UserHandler {
 
     public void register(Context context) throws Exception{
         RegisterRequest request= gson.fromJson(context.body(),RegisterRequest.class);
-        RegisterResult result=userservice.register(request);
-        context.json(result);
+        try {
+            RegisterResult result = userservice.register(request);
+            context.json(result);
+        }catch (Exception e){
+            if(e.getMessage().equals("bad request")){
+                context.status(400);
+                context.json("{\"message\":\"Error: bad request\"}");
+            }
+            if(e.getMessage().equals("already taken")){
+                context.status(403);
+                context.json("{\"message\":\"Error: unauthorized\"}");
+            }
+        }
     }
 
 }
