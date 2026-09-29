@@ -20,4 +20,10 @@ public class SessionHandler {
         context.json(result);
 
     }
+
+    public void logout(Context context) throws Exception{
+        String authtoken=context.header("Authorization");
+        sessionService.Logout(authtoken);
+        context.status(200);
+    }
 }
