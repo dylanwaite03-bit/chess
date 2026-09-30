@@ -2,13 +2,9 @@ package handler;
 
 
 import com.google.gson.Gson;
-import service.CreateGameRequest;
-
-import service.CreateGameResult;
-import service.GameService;
+import service.*;
 
 import io.javalin.http.Context;
-import service.JoinGameRequest;
 
 public class GameHandler {
     private final GameService gameService;
@@ -54,6 +50,20 @@ public class GameHandler {
             if(e.getMessage().equals("already taken")){
                 context.status(403);
                 context.json("{\"message\":\"Error: already taken\"}");
+            }
+        }
+    }
+
+    public void listGames(Context context) throws Exception{
+        String authToken=context.header("Authorization");
+
+        try{
+            ListGameResult result=gameService.listGames(authToken);
+            context.json(result);
+        } catch (Exception e) {
+            if(e.getMessage().equals("unauthorized")){
+                context.status(401);
+                context.json("{\"message\":\"Error: unauthorized\"}");
             }
         }
     }
