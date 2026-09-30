@@ -10,21 +10,17 @@ import java.util.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class StandardAPITests {
-
     private static TestUser existingUser;
     private static TestUser newUser;
     private static TestCreateRequest createRequest;
     private static TestServerFacade serverFacade;
     private static Server server;
     private String existingAuth;
-
     // ### TESTING SETUP/CLEANUP ###
-
     @AfterAll
     static void stopServer() {
         server.stop();
     }
-
     @BeforeAll
     public static void init() {
         server = new Server();
@@ -36,7 +32,6 @@ public class StandardAPITests {
         newUser = new TestUser("NewUser", "newUserPassword", "nu@mail.com");
         createRequest = new TestCreateRequest("testGame");
     }
-
     @BeforeEach
     public void setup() {
         serverFacade.clear();
@@ -45,9 +40,7 @@ public class StandardAPITests {
         TestAuthResult regResult = serverFacade.register(existingUser);
         existingAuth = regResult.getAuthToken();
     }
-
     // ### SERVER-LEVEL API TESTS ###
-
     @Test
     @Order(1)
     @DisplayName("Static Files")
@@ -59,7 +52,6 @@ public class StandardAPITests {
         Assertions.assertTrue(htmlFromServer.contains("CS 240 Chess Server Web API"),
                 "file returned did not contain an exact match of text from provided index.html");
     }
-
     @Test
     @Order(2)
     @DisplayName("Normal User Login")
@@ -71,7 +63,6 @@ public class StandardAPITests {
                 "Response did not give the same username as user");
         Assertions.assertNotNull(loginResult.getAuthToken(), "Response did not return authentication String");
     }
-
     @Test
     @Order(3)
     @DisplayName("Login Bad Request")
@@ -88,7 +79,6 @@ public class StandardAPITests {
             assertAuthFieldsMissing(loginResult);
         }
     }
-
     @Test
     @Order(4)
     @DisplayName("Login Unauthorized (Multiple Forms)")
@@ -505,5 +495,4 @@ public class StandardAPITests {
         Assertions.assertNull(result.getUsername(), "Response incorrectly returned username");
         Assertions.assertNull(result.getAuthToken(), "Response incorrectly return authentication String");
     }
-
 }
