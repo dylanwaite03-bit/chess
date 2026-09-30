@@ -2,6 +2,7 @@ package handler;
 
 
 import com.google.gson.Gson;
+import io.javalin.http.ExceptionHandler;
 import service.*;
 
 import io.javalin.http.Context;
@@ -21,14 +22,7 @@ public class GameHandler {
             CreateGameResult result = gameService.createGame(request, authToken);
             context.json(result);
         } catch (Exception e){
-            if(e.getMessage().equals("bad request")){
-                context.status(400);
-                context.json("{\"message\":\"Error: bad request\"}");
-            }
-            if(e.getMessage().equals("unauthorized")){
-                context.status(401);
-                context.json("{\"message\":\"Error: unauthorized\"}");
-            }
+            exceptionhandler(context,e);
         }
     }
 
@@ -39,18 +33,7 @@ public class GameHandler {
             gameService.joinGame(request,authToken);
             context.status(200);
         }catch (Exception e){
-            if(e.getMessage().equals("bad request")){
-                context.status(400);
-                context.json("{\"message\":\"Error: bad request\"}");
-            }
-            if(e.getMessage().equals("unauthorized")){
-                context.status(401);
-                context.json("{\"message\":\"Error: unauthorized\"}");
-            }
-            if(e.getMessage().equals("already taken")){
-                context.status(403);
-                context.json("{\"message\":\"Error: already taken\"}");
-            }
+            exceptionhandler(context,e);
         }
     }
 
@@ -61,10 +44,22 @@ public class GameHandler {
             ListGameResult result=gameService.listGames(authToken);
             context.json(result);
         } catch (Exception e) {
-            if(e.getMessage().equals("unauthorized")){
-                context.status(401);
-                context.json("{\"message\":\"Error: unauthorized\"}");
-            }
+            exceptionhandler(context,e);
+        }
+    }
+
+    public void exceptionhandler(Context context, Exception e){
+        if(e.getMessage().equals("bad request")){
+            context.status(400);
+            context.json("{\"message\":\"Error: bad request\"}");
+        }
+        if(e.getMessage().equals("unauthorized")){
+            context.status(401);
+            context.json("{\"message\":\"Error: unauthorized\"}");
+        }
+        if(e.getMessage().equals("already taken")){
+            context.status(403);
+            context.json("{\"message\":\"Error: already taken\"}");
         }
     }
 
