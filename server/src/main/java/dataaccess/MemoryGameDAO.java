@@ -2,7 +2,6 @@ package dataaccess;
 
 import model.GameData;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +33,7 @@ public class MemoryGameDAO implements GameDAO {
 
     @Override
     public void updateGame(GameData game) throws DataAccessException{
-        games.put(game.gameId(), game);
+        games.put(game.gameID(), game);
     }
 
     @Override

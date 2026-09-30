@@ -1,7 +1,6 @@
 package service;
 
 import dataaccess.AuthDAO;
-import dataaccess.DataAccessException;
 import dataaccess.GameDAO;
 import model.AuthData;
 import model.GameData;
@@ -51,7 +50,7 @@ public class GameService {
             if (game.whiteUsername()!=null){
                 throw new Exception("already taken");
             }
-            GameData updatedGame=new GameData(game.gameId(),authData.username(),
+            GameData updatedGame=new GameData(game.gameID(),authData.username(),
                     game.blackUsername(),game.gameName(),game.game());
             gameDAO.updateGame(updatedGame);
         }
@@ -60,7 +59,7 @@ public class GameService {
             if (game.blackUsername() != null) {
                 throw new Exception("already taken");
             }
-            GameData updatedGame=new GameData(game.gameId(),game.whiteUsername(),
+            GameData updatedGame=new GameData(game.gameID(),game.whiteUsername(),
                     authData.username(),game.gameName(),game.game());
             gameDAO.updateGame(updatedGame);
         }
