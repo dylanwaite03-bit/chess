@@ -6,14 +6,10 @@ import dataaccess.MemoryAuthDAO;
 import dataaccess.MemoryGameDAO;
 import model.AuthData;
 import org.junit.jupiter.api.Test;
-import service.CreateGameRequest;
-import service.CreateGameResult;
-import service.GameService;
-import service.JoinGameRequest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GameServiceTest {
+public class GameServiceTests {
     @Test
     public void creategamesuccess()throws Exception{
         GameDAO gameDAO=new MemoryGameDAO();

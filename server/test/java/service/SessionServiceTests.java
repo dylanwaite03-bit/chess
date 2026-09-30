@@ -7,13 +7,10 @@ import dataaccess.UserDAO;
 import model.AuthData;
 import model.UserData;
 import org.junit.jupiter.api.Test;
-import service.LoginRequest;
-import service.LoginResult;
-import service.SessionService;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SessionServiceTest {
+public class SessionServiceTests {
 
     @Test
     public void successlogin() throws Exception{

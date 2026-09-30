@@ -5,11 +5,10 @@ import model.AuthData;
 import model.UserData;
 import model.GameData;
 import org.junit.jupiter.api.Test;
-import service.ClearService;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ClearServiceTest {
+public class ClearServiceTests {
 
     @Test
     public void clearsuccess() throws Exception{
