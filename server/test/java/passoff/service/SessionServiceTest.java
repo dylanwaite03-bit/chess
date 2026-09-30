@@ -88,4 +88,16 @@ public class SessionServiceTest {
         assertThrows(Exception.class, () -> sessionService.logout("badtoken"));
     }
 
+    @Test
+    public void badrequestlogin()throws Exception{
+        UserDAO userDAO=new MemoryUserDAO();
+        AuthDAO authDAO=new MemoryAuthDAO();
+
+        SessionService sessionService=new SessionService(userDAO,authDAO);
+
+        LoginRequest request=new LoginRequest(null,"password");
+
+        assertThrows(Exception.class, () -> sessionService.login(request));
+    }
+
 }
