@@ -44,4 +44,16 @@ public class UserServiceTest {
         assertThrows(Exception.class, () -> userService.register(request));
     }
 
+    @Test
+    public void registerbadrequest() throws Exception{
+        UserDAO userDAO=new MemoryUserDAO();
+        AuthDAO authDAO=new MemoryAuthDAO();
+
+        UserService userService=new UserService(userDAO,authDAO);
+
+        RegisterRequest request=new RegisterRequest(null,"password","email@e.com");
+
+        assertThrows(Exception.class, () -> userService.register(request));
+    }
+
 }
