@@ -38,7 +38,7 @@ public class Server {
         GameService gameService=new GameService(gameDAO, authDAO);
         GameHandler gameHandler=new GameHandler(gameService);
 
-        ClearService clearService=new ClearService(userDAO,authDAO);
+        ClearService clearService=new ClearService(userDAO,authDAO,gameDAO);
         ClearHandler clearHandler=new ClearHandler(clearService);
 
         javalin.post("/user", userHandler::register);

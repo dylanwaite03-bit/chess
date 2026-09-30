@@ -1,9 +1,6 @@
 package passoff.service;
 
-import dataaccess.AuthDAO;
-import dataaccess.MemoryAuthDAO;
-import dataaccess.MemoryUserDAO;
-import dataaccess.UserDAO;
+import dataaccess.*;
 import model.AuthData;
 import model.UserData;
 import org.junit.jupiter.api.Test;
@@ -17,8 +14,9 @@ public class ClearServiceTest {
     public void clearsuccess() throws Exception{
         UserDAO userDAO= new MemoryUserDAO();
         AuthDAO authDAO=new MemoryAuthDAO();
+        GameDAO gameDAO=new MemoryGameDAO();
 
-        ClearService clearService=new ClearService(userDAO,authDAO);
+        ClearService clearService=new ClearService(userDAO,authDAO,gameDAO);
 
         userDAO.createUser(new UserData("dylan", "password", "email@e.com"));
 
