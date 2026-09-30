@@ -93,7 +93,7 @@ public class GameServiceTest {
         JoinGameRequest request =
                 new JoinGameRequest(result.gameID(), "brown");
         assertThrows(Exception.class, () ->
-                gameService.joinGame(request, "badtoken"));
+                gameService.joinGame(request, "token123"));
     }
 
     @Test
@@ -122,6 +122,19 @@ public class GameServiceTest {
                 gameService.listGames("bad token"));
     }
 
+    @Test
+    public void listgamessuccess()throws Exception{
+        GameDAO gameDAO=new MemoryGameDAO();
+        AuthDAO authDAO=new MemoryAuthDAO();
+        GameService gameService=new GameService(gameDAO,authDAO);
 
+        authDAO.createAuth(new AuthData("token123", "dylan"));
+
+        gameService.createGame(
+                new CreateGameRequest("Chess Game"),
+                "token123");
+
+        assertEquals(1, gameService.listGames("token123").games().size());
+    }
 
 }
