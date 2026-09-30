@@ -113,6 +113,14 @@ public class GameServiceTest {
                 gameService.joinGame(request, "token123"));
     }
 
+    @Test
+    public void listgamesunauthorized()throws Exception{
+        GameDAO gameDAO=new MemoryGameDAO();
+        AuthDAO authDAO=new MemoryAuthDAO();
+        GameService gameService=new GameService(gameDAO,authDAO);
+        assertThrows(Exception.class, () ->
+                gameService.listGames("bad token"));
+    }
 
 
 

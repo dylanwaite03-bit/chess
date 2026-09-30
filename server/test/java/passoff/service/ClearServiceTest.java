@@ -3,6 +3,7 @@ package passoff.service;
 import dataaccess.*;
 import model.AuthData;
 import model.UserData;
+import model.GameData;
 import org.junit.jupiter.api.Test;
 import service.ClearService;
 
@@ -21,11 +22,20 @@ public class ClearServiceTest {
         userDAO.createUser(new UserData("dylan", "password", "email@e.com"));
 
         authDAO.createAuth(new AuthData("token123", "dylan"));
+        GameData game = new GameData(
+                1,
+                "dylan",
+                null,
+                "Chess Game",
+                null);
+
+        gameDAO.createGame(game);
 
         clearService.clear();
 
         assertNull(userDAO.getUser("dylan"));
         assertNull(authDAO.getAuth("token123"));
+        assertNull(gameDAO.getGame(1));
 
     }
 }
