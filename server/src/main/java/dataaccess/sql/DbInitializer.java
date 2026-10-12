@@ -18,10 +18,10 @@ public class DbInitializer {
 
     private static String Create_game_table= """
             CREATE TABLE IF NOT EXISTS games (
-            gameID INT NOT NULL AUTO_INCREMENT
-            whiteUsername VARCHAR(255) NOT NULL,
-            blackUsername VARCHAR(255) NOT NULL,
-            gameName (255) NOT NULL,
+            gameID INT NOT NULL AUTO_INCREMENT,
+            whiteUsername VARCHAR(255),
+            blackUsername VARCHAR(255),
+            gameName VARCHAR(255) NOT NULL,
             game LONGTEXT NOT NULL,
             PRIMARY KEY(gameID))""";
 
@@ -40,7 +40,7 @@ public class DbInitializer {
                 ps.executeUpdate();
             }
         }catch (SQLException ex){
-            throw new DataAccessException("error creating table");
+            throw new DataAccessException("error creating table", ex);
         }
     }
 }
