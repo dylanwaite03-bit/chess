@@ -1,4 +1,7 @@
-package dataaccess;
+package dataaccess.sql;
+import dataaccess.DataAccessException;
+import dataaccess.DatabaseManager;
+
 import java.sql.SQLException;
 public class DbInitializer {
 
@@ -24,7 +27,7 @@ public class DbInitializer {
 
 
 
-    public static void initialize() throws DataAccessException{
+    public static void initialize() throws DataAccessException {
         DatabaseManager.createDatabase();
         try(var conn=DatabaseManager.getConnection()){
             try(var ps=conn.prepareStatement(Create_user_table)){
