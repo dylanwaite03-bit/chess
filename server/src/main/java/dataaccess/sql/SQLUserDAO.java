@@ -23,7 +23,7 @@ public class SQLUserDAO implements UserDAO {
             }
         }catch(SQLException ex){
             if (ex.getErrorCode()==1062){
-                throw new DataAccessException("already taken ",ex);
+                throw new DataAccessException("already taken",ex);
             }
             throw new DataAccessException("error",ex);
         }
