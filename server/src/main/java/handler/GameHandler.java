@@ -53,13 +53,17 @@ public class GameHandler {
             context.status(400);
             context.json("{\"message\":\"Error: bad request\"}");
         }
-        if(e.getMessage().equals("unauthorized")){
+        else if(e.getMessage().equals("unauthorized")){
             context.status(401);
             context.json("{\"message\":\"Error: unauthorized\"}");
         }
-        if(e.getMessage().equals("already taken")){
+        else if(e.getMessage().equals("already taken")){
             context.status(403);
             context.json("{\"message\":\"Error: already taken\"}");
+        }
+        else{
+            context.status(500);
+            context.json("{\"message\":\"Error:" +e.getMessage() +"\"}");
         }
     }
 
