@@ -4,6 +4,7 @@ import dataaccess.AuthDAO;
 import dataaccess.DataAccessException;
 import dataaccess.DatabaseManager;
 import model.AuthData;
+import model.UserData;
 
 import java.sql.SQLException;
 
@@ -26,7 +27,20 @@ public class SQLAuthDAO implements AuthDAO {
 
     @Override
     public AuthData getAuth(String authToken) throws DataAccessException{
-        return null;
+        try (var conn = DatabaseManager.getConnection()) {
+            try (var preparedStatement = conn.prepareStatement("""
+                SELECT username, authToken FROM auth WHERE username=?""")) {
+                preparedStatement.setString(1,authToken);
+                try(var result=preparedStatement.executeQuery()){
+                    if (result.next()){
+                        return new AuthData(result.getString("username"),result.getString("authToken"));
+                    }
+                    return null;
+                }
+            }
+        }catch(SQLException ex){
+            throw new DataAccessException("error reading",ex);
+        }
     }
 
     @Override
