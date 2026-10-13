@@ -22,12 +22,26 @@ public class SQLGameDAO implements GameDAO {
             throw new DataAccessException("error clearing games",e);
         }
 
-
     }
 
     @Override
     public int createGame(GameData game) throws DataAccessException{
-        return 0;
+        try (var conn = DatabaseManager.getConnection()) {
+            try (var preparedStatement = conn.prepareStatement("""
+                INSERT INTO games (whiteUsername,blackUsername,gameName,name)
+                VALUES (?,?,?,?)""")) {
+                preparedStatement.setString(1,game.whiteUsername());
+                preparedStatement.setString(2, game.blackUsername());
+                preparedStatement.setString(3, game.gameName());
+                preparedStatement.setString(4, game.game());
+                preparedStatement.executeUpdate();
+            }
+        }catch(SQLException ex){
+            if (ex.getErrorCode()==1062){
+                throw new DataAccessException("already taken",ex);
+            }
+            throw new DataAccessException("error",ex);
+        }
     }
 
     @Override
