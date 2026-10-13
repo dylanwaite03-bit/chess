@@ -35,7 +35,7 @@ public class SQLGameDAO implements GameDAO {
     public int createGame(GameData game) throws DataAccessException{
         try (var conn = DatabaseManager.getConnection()) {
             try (var preparedStatement = conn.prepareStatement("""
-                INSERT INTO games (whiteUsername,blackUsername,gameName,name)
+                INSERT INTO games (whiteUsername,blackUsername,gameName,game)
                 VALUES (?,?,?,?)""", Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1,game.whiteUsername());
                 preparedStatement.setString(2, game.blackUsername());
@@ -58,7 +58,7 @@ public class SQLGameDAO implements GameDAO {
     public GameData getGame(int gameId) throws DataAccessException{
         try (var conn = DatabaseManager.getConnection()) {
             try (var preparedStatement = conn.prepareStatement("""
-                SELECT gameID,whiteUsername,blackUsername,gameName,name FROM games WHERE game_ID=?""")) {
+                SELECT gameID,whiteUsername,blackUsername,gameName,game FROM games WHERE game_ID=?""")) {
                 preparedStatement.setInt(1,gameId);
                 try(var result=preparedStatement.executeQuery()){
                     if (result.next()){
@@ -79,7 +79,7 @@ public class SQLGameDAO implements GameDAO {
         List<GameData> games=new ArrayList<GameData>();
         try (var conn = DatabaseManager.getConnection()) {
             try (var preparedStatement = conn.prepareStatement("""
-                SELECT gameID,whiteUsername,blackUsername,gameName,name FROM games""")) {
+                SELECT gameID,whiteUsername,blackUsername,gameName,game FROM games""")) {
                 try(var result=preparedStatement.executeQuery()){
                     if (result.next()){
                         while(result.next()) {
@@ -101,7 +101,7 @@ public class SQLGameDAO implements GameDAO {
     public void updateGame(GameData game) throws DataAccessException{
         try (var conn = DatabaseManager.getConnection()) {
             try (var preparedStatement = conn.prepareStatement("""
-                UPDATE games SET whiteUsername=?,blackUsername=?,gameName=?,name=? WHERE gameID=?""")) {
+                UPDATE games SET whiteUsername=?,blackUsername=?,gameName=?,game=? WHERE gameID=?""")) {
                 preparedStatement.setString(1,game.whiteUsername());
                 preparedStatement.setString(2, game.blackUsername());
                 preparedStatement.setString(3, game.gameName());
