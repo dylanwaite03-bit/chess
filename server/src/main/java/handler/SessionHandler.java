@@ -28,6 +28,10 @@ public class SessionHandler {
                 context.status(401);
                 context.json("{\"message\":\"Error: unauthorized\"}");
             }
+            else{
+                context.status(500);
+                context.json("{\"message\":\"Error:" +e.getMessage() +"\"}");
+            }
         }
     }
 
@@ -40,6 +44,10 @@ public class SessionHandler {
             if(e.getMessage().equals("unauthorized")){
                 context.status(401);
                 context.json("{\"message\":\"Error: unauthorized\"}");
+            }
+            else{
+                context.status(500);
+                context.json("{\"message\":\"Error:" +e.getMessage() +"\"}");
             }
         }
     }

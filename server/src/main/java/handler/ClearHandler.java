@@ -11,7 +11,12 @@ public class ClearHandler {
     }
 
     public void clear(Context context) throws Exception{
-        clearService.clear();
-        context.status(200).json("{}");
+        try {
+            clearService.clear();
+            context.status(200).json("{}");
+        }catch(Exception e){
+            context.status(500);
+            context.json("{\"message\":\"Error:" +e.getMessage() +"\"}");
+        }
     }
 }
