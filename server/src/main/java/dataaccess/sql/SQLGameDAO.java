@@ -8,6 +8,7 @@ import model.GameData;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.Gson;
 import model.UserData;
@@ -61,7 +62,7 @@ public class SQLGameDAO implements GameDAO {
                 preparedStatement.setInt(1,gameId);
                 try(var result=preparedStatement.executeQuery()){
                     if (result.next()){
-                        return new GameData(result.getInt(gameId),result.getString("whiteUsername"),
+                        return new GameData(result.getInt("gameID"),result.getString("whiteUsername"),
                                 result.getString("blackUsername"),result.getString("gameName"),
                                 gson.fromJson(result.getString("game"), ChessGame.class));
                     }
@@ -75,7 +76,25 @@ public class SQLGameDAO implements GameDAO {
 
     @Override
     public List<GameData> listGames() throws DataAccessException{
-        return null;
+        List<GameData> games=new ArrayList<GameData>();
+        try (var conn = DatabaseManager.getConnection()) {
+            try (var preparedStatement = conn.prepareStatement("""
+                SELECT gameID,whiteUsername,blackUsername,gameName,name FROM games""")) {
+                try(var result=preparedStatement.executeQuery()){
+                    if (result.next()){
+                        while(result.next()) {
+                            games.add(new GameData(result.getInt("gameID"), result.getString("whiteUsername"),
+                                    result.getString("blackUsername"), result.getString("gameName"),
+                                    gson.fromJson(result.getString("game"), ChessGame.class)));
+                        }
+                        return games;
+                    }
+                    return null;
+                }
+            }
+        }catch(SQLException ex){
+            throw new DataAccessException("error listing games",ex);
+        }
     }
 
     @Override
