@@ -4,6 +4,7 @@ import dataaccess.UserDAO;
 import model.AuthData;
 import model.UserData;
 import org.eclipse.jetty.server.Authentication;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.UUID;
 
@@ -27,7 +28,7 @@ public class SessionService {
             throw new Exception("unauthorized");
         }
 
-        if (!user.password().equals(request.password())){
+        if (!BCrypt.checkpw(request.password(),user.password())){
             throw new Exception(("unauthorized"));
         }
 
