@@ -1,5 +1,6 @@
 package dataaccess.sql;
 
+import chess.ChessGame;
 import dataaccess.DataAccessException;
 import dataaccess.DatabaseManager;
 import dataaccess.GameDAO;
@@ -9,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import com.google.gson.Gson;
+import model.UserData;
 
 public class SQLGameDAO implements GameDAO {
 
@@ -53,7 +55,22 @@ public class SQLGameDAO implements GameDAO {
 
     @Override
     public GameData getGame(int gameId) throws DataAccessException{
-        return null;
+        try (var conn = DatabaseManager.getConnection()) {
+            try (var preparedStatement = conn.prepareStatement("""
+                SELECT gameID,whiteUsername,blackUsername,gameName,name FROM games WHERE game_ID=?""")) {
+                preparedStatement.setInt(1,gameId);
+                try(var result=preparedStatement.executeQuery()){
+                    if (result.next()){
+                        return new GameData(result.getInt(gameId),result.getString("whiteUsername"),
+                                result.getString("blackUsername"),result.getString("gameName"),
+                                gson.fromJson(result.getString("game"), ChessGame.class));
+                    }
+                    return null;
+                }
+            }
+        }catch(SQLException ex){
+            throw new DataAccessException("error reading",ex);
+        }
     }
 
     @Override
