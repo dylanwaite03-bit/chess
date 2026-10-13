@@ -6,9 +6,13 @@ import dataaccess.GameDAO;
 import model.GameData;
 
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
+import com.google.gson.Gson;
 
 public class SQLGameDAO implements GameDAO {
+
+    private Gson gson=new Gson();
 
     @Override
     public void clear() throws DataAccessException{
@@ -29,17 +33,20 @@ public class SQLGameDAO implements GameDAO {
         try (var conn = DatabaseManager.getConnection()) {
             try (var preparedStatement = conn.prepareStatement("""
                 INSERT INTO games (whiteUsername,blackUsername,gameName,name)
-                VALUES (?,?,?,?)""")) {
+                VALUES (?,?,?,?)""", Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1,game.whiteUsername());
                 preparedStatement.setString(2, game.blackUsername());
                 preparedStatement.setString(3, game.gameName());
-                preparedStatement.setString(4, game.game());
+                preparedStatement.setString(4, gson.toJson(game.game()));
                 preparedStatement.executeUpdate();
+                try(var keys=preparedStatement.getGeneratedKeys()){
+                    if(keys.next()){
+                        return keys.getInt(1);
+                    }
+                    throw new DataAccessException("error creating game");
+                }
             }
         }catch(SQLException ex){
-            if (ex.getErrorCode()==1062){
-                throw new DataAccessException("already taken",ex);
-            }
             throw new DataAccessException("error",ex);
         }
     }
