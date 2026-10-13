@@ -1,6 +1,9 @@
 package server;
 
 import dataaccess.*;
+import dataaccess.sql.SQLAuthDAO;
+import dataaccess.sql.SQLGameDAO;
+import dataaccess.sql.SQLUserDAO;
 import handler.GameHandler;
 import io.javalin.*;
 import com.google.gson.Gson;
@@ -25,9 +28,9 @@ public class Server {
                     config.jsonMapper(new JavalinGson());
                 });
 
-        UserDAO userDAO= new MemoryUserDAO();
-        AuthDAO authDAO=new MemoryAuthDAO();
-        GameDAO gameDAO=new MemoryGameDAO();
+        UserDAO userDAO= new SQLUserDAO();
+        AuthDAO authDAO=new SQLAuthDAO();
+        GameDAO gameDAO=new SQLGameDAO();
 
         UserService userService=new UserService(userDAO,authDAO);
         UserHandler userHandler=new UserHandler(userService);
