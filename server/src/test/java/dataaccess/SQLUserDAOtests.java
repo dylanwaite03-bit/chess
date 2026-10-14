@@ -50,4 +50,17 @@ public class SQLUserDAOtests {
                 userDAO.createUser(new UserData("dyl","pass","email")));
     }
 
+    @Test
+    public void getusertest()throws DataAccessException{
+
+        UserData user=new UserData("dyl","pass","email");
+        userDAO.createUser(user);
+        assertEquals("dyl",userDAO.getUser("dyl").username());
+        assertEquals("pass",userDAO.getUser("dyl").password());
+        assertEquals("email",userDAO.getUser("dyl").email());
+    }
+
+
+
+
 }
