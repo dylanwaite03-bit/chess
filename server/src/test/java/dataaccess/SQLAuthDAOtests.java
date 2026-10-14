@@ -10,8 +10,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SQLAuthDAOtests {
     private SQLAuthDAO authDAO;
@@ -37,6 +36,17 @@ public class SQLAuthDAOtests {
         assertEquals("dyl",stored.username());
         assertEquals("token",stored.authtoken());
     }
+
+    @Test
+    public void deleteauthtest()throws DataAccessException{
+
+        AuthData auth=new AuthData("token","dyl");
+        authDAO.createAuth(auth);
+        authDAO.deleteAuth("token");
+        AuthData stored=authDAO.getAuth("token");
+        assertNull(stored);
+    }
+
 
     @Test
     public void createauthtesterror()throws DataAccessException{
