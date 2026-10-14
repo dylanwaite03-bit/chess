@@ -6,10 +6,9 @@ import dataaccess.sql.SQLGameDAO;
 import model.GameData;
 import org.junit.jupiter.api.*;
 
-import javax.xml.crypto.Data;
 import java.util.List;
 
-public class SQLGameDAOtests {
+public class SQLGameDAOTests {
     private SQLGameDAO gameDAO;
 
     @BeforeAll

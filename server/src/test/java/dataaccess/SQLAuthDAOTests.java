@@ -2,9 +2,7 @@ package dataaccess;
 
 import dataaccess.sql.DbInitializer;
 import dataaccess.sql.SQLAuthDAO;
-import dataaccess.sql.SQLUserDAO;
 import model.AuthData;
-import model.UserData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SQLAuthDAOtests {
+public class SQLAuthDAOTests {
     private SQLAuthDAO authDAO;
 
     @BeforeAll

@@ -3,17 +3,14 @@ package dataaccess;
 import dataaccess.sql.DbInitializer;
 import dataaccess.sql.SQLUserDAO;
 import model.UserData;
-import org.eclipse.jetty.server.Authentication;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.xml.crypto.Data;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SQLUserDAOtests {
+public class SQLUserDAOTests {
 
     private SQLUserDAO userDAO;
 
