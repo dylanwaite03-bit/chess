@@ -56,4 +56,14 @@ public class SQLAuthDAOtests {
         Assertions.assertThrows(DataAccessException.class, () ->
                 authDAO.createAuth(new AuthData("token","dyl")));
     }
+
+    @Test
+    public void clearauthtest()throws DataAccessException{
+
+        AuthData auth=new AuthData("token","dyl");
+        authDAO.createAuth(auth);
+        authDAO.clear();
+        assertNull(authDAO.getAuth("token"));
+
+    }
 }
