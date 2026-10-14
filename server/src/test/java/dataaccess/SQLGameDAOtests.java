@@ -24,6 +24,14 @@ public class SQLGameDAOtests {
     }
 
     @Test
+    public void creategamestest()throws DataAccessException{
+        int firstId=gameDAO.createGame(new GameData(0,null,null,"first",new ChessGame()));
+
+        Assertions.assertTrue(firstId>0);
+        Assertions.assertNotNull(gameDAO.getGame(firstId));
+    }
+
+    @Test
     public void listgamestest()throws DataAccessException{
         int firstId=gameDAO.createGame(new GameData(0,null,null,"first",new ChessGame()));
         int secondId=gameDAO.createGame(new GameData(1,null,null,"second",new ChessGame()));
