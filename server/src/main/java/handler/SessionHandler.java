@@ -24,7 +24,7 @@ public class SessionHandler {
                 context.status(400);
                 context.json("{\"message\":\"Error: bad request\"}");
             }
-            if(e.getMessage().equals("unauthorized")){
+            else if(e.getMessage().equals("unauthorized")){
                 context.status(401);
                 context.json("{\"message\":\"Error: unauthorized\"}");
             }
