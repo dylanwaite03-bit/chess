@@ -32,6 +32,22 @@ public class SQLGameDAOtests {
     }
 
     @Test
+    public void getgamestest()throws DataAccessException{
+        int firstId=gameDAO.createGame(new GameData(0,null,null,"first",new ChessGame()));
+        GameData stored=gameDAO.getGame(firstId);
+        Assertions.assertEquals(firstId,stored.gameID());
+        Assertions.assertNull(stored.whiteUsername());
+        Assertions.assertNull(stored.blackUsername());
+        Assertions.assertEquals("first",stored.gameName());
+        Assertions.assertNotNull(stored.game());
+    }
+
+    @Test
+    public void getgamestestfail()throws DataAccessException{
+        Assertions.assertNull(gameDAO.getGame(22));
+    }
+
+    @Test
     public void listgamestest()throws DataAccessException{
         int firstId=gameDAO.createGame(new GameData(0,null,null,"first",new ChessGame()));
         int secondId=gameDAO.createGame(new GameData(1,null,null,"second",new ChessGame()));
