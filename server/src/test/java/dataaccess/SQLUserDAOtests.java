@@ -11,8 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.xml.crypto.Data;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SQLUserDAOtests {
 
@@ -60,7 +59,14 @@ public class SQLUserDAOtests {
         assertEquals("email",userDAO.getUser("dyl").email());
     }
 
+    @Test
+    public void clearusertest()throws DataAccessException{
 
+        UserData user=new UserData("dyl","pass","email");
+        userDAO.createUser(user);
+        userDAO.clear();
+        assertNull(userDAO.getUser("dyl"));
+    }
 
 
 }
