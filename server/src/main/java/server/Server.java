@@ -1,6 +1,7 @@
 package server;
 
 import dataaccess.*;
+import dataaccess.sql.DbInitializer;
 import dataaccess.sql.SQLAuthDAO;
 import dataaccess.sql.SQLGameDAO;
 import dataaccess.sql.SQLUserDAO;
@@ -21,6 +22,13 @@ public class Server {
     private final Javalin javalin;
 
     public Server() {
+
+        try {
+            DbInitializer.initialize();
+        }catch (DataAccessException e){
+            throw new RuntimeException("unable to start database");
+        }
+
         Gson gson=new Gson();
 
         javalin = Javalin.create(config -> {
