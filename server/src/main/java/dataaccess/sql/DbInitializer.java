@@ -5,18 +5,18 @@ import dataaccess.DatabaseManager;
 import java.sql.SQLException;
 public class DbInitializer {
 
-    private static String CREATE_USER_TABLE= """
+    private static String createUserTable= """
             CREATE TABLE IF NOT EXISTS users (username VARCHAR(255) NOT NULL,
             password VARCHAR(255) NOT NULL,
             email VARCHAR(255) NOT NULL,
              PRIMARY KEY(username))""";
 
-    private static String CREATE_AUTH_TABLE= """
+    private static String createAuthTable= """
             CREATE TABLE IF NOT EXISTS auth (authToken VARCHAR(255) NOT NULL,
             username VARCHAR(255) NOT NULL,
             PRIMARY KEY(authToken))""";
 
-    private static String CREATE_GAME_TABLE= """
+    private static String createGameTable= """
             CREATE TABLE IF NOT EXISTS games (
             gameID INT NOT NULL AUTO_INCREMENT,
             whiteUsername VARCHAR(255),
@@ -30,13 +30,13 @@ public class DbInitializer {
     public static void initialize() throws DataAccessException {
         DatabaseManager.createDatabase();
         try(var conn=DatabaseManager.getConnection()){
-            try(var ps=conn.prepareStatement(CREATE_USER_TABLE)){
+            try(var ps=conn.prepareStatement(createUserTable)){
                 ps.executeUpdate();
             }
-            try(var ps=conn.prepareStatement(CREATE_AUTH_TABLE)){
+            try(var ps=conn.prepareStatement(createAuthTable)){
                 ps.executeUpdate();
             }
-            try(var ps=conn.prepareStatement(CREATE_GAME_TABLE)){
+            try(var ps=conn.prepareStatement(createGameTable)){
                 ps.executeUpdate();
             }
         }catch (SQLException ex){
