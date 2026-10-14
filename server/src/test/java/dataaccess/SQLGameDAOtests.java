@@ -70,5 +70,22 @@ public class SQLGameDAOtests {
         Assertions.assertTrue(games.isEmpty());
     }
 
+    @Test
+    public void updategamestest()throws DataAccessException{
+
+        int firstId=gameDAO.createGame(new GameData(0,null,null,"first",new ChessGame()));
+
+        ChessGame gamechange=new ChessGame();
+        gamechange.setTeamTurn(ChessGame.TeamColor.BLACK);
+        gameDAO.updateGame(new GameData(firstId,"d","b","first",gamechange));
+        GameData stored= gameDAO.getGame(firstId);
+
+        Assertions.assertEquals(firstId,stored.gameID());
+        Assertions.assertEquals("d",stored.whiteUsername());
+        Assertions.assertEquals("b",stored.blackUsername());
+        Assertions.assertEquals(ChessGame.TeamColor.BLACK,stored.game().getTeamTurn());
+    }
+
+
 
 }
