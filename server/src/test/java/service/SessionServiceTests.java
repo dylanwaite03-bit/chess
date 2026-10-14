@@ -4,9 +4,12 @@ import dataaccess.AuthDAO;
 import dataaccess.MemoryAuthDAO;
 import dataaccess.MemoryUserDAO;
 import dataaccess.UserDAO;
+import dataaccess.sql.SQLAuthDAO;
+import dataaccess.sql.SQLUserDAO;
 import model.AuthData;
 import model.UserData;
 import org.junit.jupiter.api.Test;
+import org.mindrot.jbcrypt.BCrypt;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,8 +21,9 @@ public class SessionServiceTests {
         AuthDAO authDAO=new MemoryAuthDAO();
 
         SessionService sessionService=new SessionService(userDAO,authDAO);
+        String hashedpassword= BCrypt.hashpw("password",BCrypt.gensalt());
         UserData user= new UserData( "dylan",
-                "password",
+                hashedpassword,
                 "email@e.com");
 
         userDAO.createUser(user);
