@@ -63,4 +63,12 @@ public class SQLGameDAOtests {
         Assertions.assertNull(stored.blackUsername());
     }
 
+    @Test
+    public void listgamesempty()throws DataAccessException{
+
+        List<GameData> games=gameDAO.listGames();
+        Assertions.assertTrue(games.isEmpty());
+    }
+
+
 }
