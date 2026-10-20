@@ -24,4 +24,17 @@ public class ServerFacade {
         return response.body();
     }
 
+    public String login (String username,String password) throws Exception{
+        LoginRquest loginrequest=new LoginRquest(username,password);
+        String json=gson.toJson(loginrequest);
+        HttpRequest request=HttpRequest.newBuilder().uri(URI.create(server_url+"/session")).
+                header("Content-Type","application/json").
+                POST(HttpRequest.BodyPublishers.ofString(json)).build();
+
+        HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
+        return response.body();
+    }
+
+    private record LoginRquest(String username,String password){}
+
 }
