@@ -14,7 +14,7 @@ public class ChessClient {
         System.out.println("1: Login");
         System.out.println("2: Create account");
         String choice=scanner.nextLine();
-        if (choice == "2"){
+        if (choice.equals("2")){
             register();
         }
     }
