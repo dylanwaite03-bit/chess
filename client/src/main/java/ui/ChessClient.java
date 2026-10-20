@@ -11,18 +11,21 @@ public class ChessClient {
 
 
     public void main(){
-        if (server.authenticated()){
-            System.out.println("1: Loggedin");
-        }
-
-        System.out.println("1: Login");
-        System.out.println("2: Create account");
-        String choice=scanner.nextLine();
-        if (choice.equals("1")){
-            login();
-        }
-        if (choice.equals("2")){
-            register();
+        while (true) {
+            if (server.authenticated()) {
+                System.out.print("1: Loggedin");
+            }
+            else {
+                System.out.println("1: Login");
+                System.out.println("2: Create account");
+                String choice = scanner.nextLine();
+                if (choice.equals("1")) {
+                    login();
+                }
+                if (choice.equals("2")) {
+                    register();
+                }
+            }
         }
     }
 
@@ -53,5 +56,7 @@ public class ChessClient {
             System.out.println("login failed" + e.getMessage());
         }
     }
+
+
 
 }
