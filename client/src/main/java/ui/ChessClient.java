@@ -15,7 +15,7 @@ public class ChessClient {
         System.out.println("2: Create account");
         String choice=scanner.nextLine();
         if (choice == "2"){
-
+            register();
         }
     }
     private void register(){
@@ -25,6 +25,12 @@ public class ChessClient {
         String password=scanner.nextLine();
         System.out.print("email");
         String email=scanner.nextLine();
-        try
+        try{
+            String response=server.register(username,password,email);
+            System.out.println(response);
+        }catch(Exception e){
+            System.out.println("register failed" + e.getMessage());
+        }
     }
+
 }
