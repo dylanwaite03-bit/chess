@@ -13,7 +13,7 @@ public class ChessClient {
     public void main(){
         while (true) {
             if (server.authenticated()) {
-                System.out.print("1: Loggedin");
+                mainscreen();
             }
             else {
                 System.out.println("1: Login");
@@ -57,6 +57,15 @@ public class ChessClient {
         }
     }
 
-
+    private void mainscreen(){
+        System.out.print("what would you like to do? Help, Logout, Create Game, " +
+                "List Games, Play Game, Observe Game");
+        String response=scanner.nextLine();
+        try{
+            System.out.println(response);
+        }catch(Exception e){
+            System.out.println("login failed" + e.getMessage());
+        }
+    }
 
 }
