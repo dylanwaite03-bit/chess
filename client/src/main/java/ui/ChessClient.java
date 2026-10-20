@@ -14,6 +14,9 @@ public class ChessClient {
         System.out.println("1: Login");
         System.out.println("2: Create account");
         String choice=scanner.nextLine();
+        if (choice.equals("1")){
+            login();
+        }
         if (choice.equals("2")){
             register();
         }
@@ -30,6 +33,19 @@ public class ChessClient {
             System.out.println(response);
         }catch(Exception e){
             System.out.println("register failed" + e.getMessage());
+        }
+    }
+
+    private void login(){
+        System.out.print("username");
+        String username=scanner.nextLine();
+        System.out.print("password");
+        String password=scanner.nextLine();
+        try{
+            String response=server.login(username,password);
+            System.out.println(response);
+        }catch(Exception e){
+            System.out.println("login failed" + e.getMessage());
         }
     }
 
