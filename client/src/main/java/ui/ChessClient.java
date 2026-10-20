@@ -4,7 +4,8 @@ import java.util.Scanner;
 
 public class ChessClient {
 
-    public static void prelogin(String[] args){
+
+    public void prelogin(){
         Scanner scanner=new Scanner(System.in);
         System.out.println("1: Login");
         System.out.println("2: Create account");
