@@ -64,7 +64,7 @@ public class ChessClient {
         try{
             System.out.println(response);
         }catch(Exception e){
-            System.out.println("login failed" + e.getMessage());
+            System.out.println("failed" + e.getMessage());
         }
     }
 
