@@ -8,8 +8,9 @@ public class ChessClient {
 
     private final Scanner scanner=new Scanner(System.in);
     private final ServerFacade server=new ServerFacade();
+    private String authtoken=null;
 
-    public void prelogin(){
+    public void main(){
 
         System.out.println("1: Login");
         System.out.println("2: Create account");
@@ -21,6 +22,7 @@ public class ChessClient {
             register();
         }
     }
+
     private void register(){
         System.out.print("username");
         String username=scanner.nextLine();

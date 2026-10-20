@@ -7,7 +7,7 @@ import ui.ChessClient;
 public class ClientMain {
     public static void main(String[] args) {
         ChessClient chessClient=new ChessClient();
-        chessClient.prelogin();
+        chessClient.main();
         var piece = new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.PAWN);
         System.out.println("♕ 240 Chess Client: " + piece);
     }

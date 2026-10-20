@@ -1,6 +1,7 @@
 package client;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import model.UserData;
 
 import java.net.URI;
@@ -12,6 +13,8 @@ public class ServerFacade {
     private final String server_url="http://localhost:8080";
     private final HttpClient client= HttpClient.newHttpClient();
     private final Gson gson=new Gson();
+    private String authToken=null;
+    private String username=null;
 
     public String register(String username,String password, String email) throws Exception{
         UserData registerRequest=new UserData(username,password,email);
@@ -21,6 +24,8 @@ public class ServerFacade {
                 POST(HttpRequest.BodyPublishers.ofString(json)).build();
 
         HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
+        this.authToken=gson.fromJson(response.body(),JsonObject.class).get("authToken").getAsString();
+        this.username=gson.fromJson(response.body(),JsonObject.class).get("username").getAsString();
         return response.body();
     }
 
@@ -32,6 +37,8 @@ public class ServerFacade {
                 POST(HttpRequest.BodyPublishers.ofString(json)).build();
 
         HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
+        this.authToken=gson.fromJson(response.body(),JsonObject.class).get("authToken").getAsString();
+        this.username=gson.fromJson(response.body(),JsonObject.class).get("username").getAsString();
         return response.body();
     }
 
