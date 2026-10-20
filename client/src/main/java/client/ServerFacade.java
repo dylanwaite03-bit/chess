@@ -16,6 +16,10 @@ public class ServerFacade {
     private String authToken=null;
     private String username=null;
 
+    public boolean authenticated(){
+        return authToken!=null && !authToken.isEmpty();
+    }
+
     public String register(String username,String password, String email) throws Exception{
         UserData registerRequest=new UserData(username,password,email);
         String json=gson.toJson(registerRequest);
