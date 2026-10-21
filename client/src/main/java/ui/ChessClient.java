@@ -103,8 +103,10 @@ public class ChessClient {
     }
     private void listGames(){
         try{
-            String response=server.listGames();
-            System.out.println(response);
+            String[] response=server.listGames();
+            for (int i=0; i<response.length;i++){
+                System.out.println((i+1)+"."+response[i]);
+            }
         }catch(Exception e){
             System.out.println("create game failed" + e.getMessage());
         }
