@@ -91,5 +91,21 @@ public class ServerFacade {
         return gameNames;
     }
 
+    public record JoinGameRequest(int gameID, String playerColor, String authToken) {
+    }
+
+    public String joinGame(int gameID, String playerColor) throws Exception{
+        JoinGameRequest registerRequest=new JoinGameRequest(gameID,playerColor,authToken);
+        String json=gson.toJson(registerRequest);
+        HttpRequest request=HttpRequest.newBuilder().uri(URI.create(server_url+"/game")).
+                header("Content-Type","application/json").
+                header("Authentication",authToken).
+                PUT(HttpRequest.BodyPublishers.ofString(json)).build();
+        HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
+        return response.body();
+    }
+
+
+
 
 }
