@@ -19,11 +19,11 @@ public class ChessClient {
             else {
                 System.out.println("1: Login");
                 System.out.println("2: Create account");
-                String choice = scanner.nextLine();
-                if (choice.equals("1")) {
+                String choice = scanner.nextLine().toLowerCase();
+                if (choice.equals("login")) {
                     login();
                 }
-                if (choice.equals("2")) {
+                if (choice.equals("create account")) {
                     register();
                 }
             }
