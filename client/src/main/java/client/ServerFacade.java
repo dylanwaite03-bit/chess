@@ -60,6 +60,19 @@ public class ServerFacade {
         return response.body();
     }
 
+    private record CreateGameRequest(String gameName,String authToken){}
+
+    public String createGame(String gameName ) throws Exception{
+        CreateGameRequest gameRequest=new CreateGameRequest(gameName,authToken);
+        String json=gson.toJson(gameRequest);
+        HttpRequest request=HttpRequest.newBuilder().uri(URI.create(server_url+"/game")).
+                header("Content-Type","application/json").
+                POST(HttpRequest.BodyPublishers.ofString(json)).build();
+        HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
+        this.authToken=gson.fromJson(response.body(),JsonObject.class).get("authToken").getAsString();
+        this.username=gson.fromJson(response.body(),JsonObject.class).get("username").getAsString();
+        return response.body();
+    }
 
 
 }
