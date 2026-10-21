@@ -2,6 +2,7 @@ package ui;
 
 import client.ServerFacade;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 public class ChessClient {
@@ -60,11 +61,25 @@ public class ChessClient {
     private void mainscreen(){
         System.out.print("what would you like to do? Help, Logout, Create Game, " +
                 "List Games, Play Game, Observe Game");
-        String response=scanner.nextLine();
+        String response=scanner.nextLine().toLowerCase();
+        if (response.equals("logout")){
+            logout();
+        }
+        else {
+            try {
+                System.out.println(response);
+            } catch (Exception e) {
+                System.out.println("failed" + e.getMessage());
+            }
+        }
+    }
+
+    private void logout(){
         try{
+            String response=server.logout();
             System.out.println(response);
         }catch(Exception e){
-            System.out.println("failed" + e.getMessage());
+            System.out.println("logout failed" + e.getMessage());
         }
     }
 
