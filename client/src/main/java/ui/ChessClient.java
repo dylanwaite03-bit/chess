@@ -68,6 +68,9 @@ public class ChessClient {
         else if (response.equals("create game")){
             createGame();
         }
+        else if (response.equals("list games")){
+            listGames();
+        }
         else {
             try {
                 System.out.println(response);
@@ -91,6 +94,14 @@ public class ChessClient {
         String gameName=scanner.nextLine();
         try{
             String response=server.createGame(gameName);
+            System.out.println(response);
+        }catch(Exception e){
+            System.out.println("create game failed" + e.getMessage());
+        }
+    }
+    private void listGames(){
+        try{
+            String response=server.listGames();
             System.out.println(response);
         }catch(Exception e){
             System.out.println("create game failed" + e.getMessage());
