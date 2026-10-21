@@ -48,4 +48,18 @@ public class ServerFacade {
 
     private record LoginRquest(String username,String password){}
 
+    public String logout () throws Exception{
+
+        HttpRequest request=HttpRequest.newBuilder().uri(URI.create(server_url+"/session")).
+                header("Authorization",authToken).
+                DELETE().build();
+
+        HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
+        this.authToken=null;
+        this.username=null;
+        return response.body();
+    }
+
+
+
 }
