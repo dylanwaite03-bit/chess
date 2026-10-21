@@ -65,6 +65,9 @@ public class ChessClient {
         if (response.equals("logout")){
             logout();
         }
+        else if (response.equals("create game")){
+            createGame();
+        }
         else {
             try {
                 System.out.println(response);
@@ -80,6 +83,17 @@ public class ChessClient {
             System.out.println(response);
         }catch(Exception e){
             System.out.println("logout failed" + e.getMessage());
+        }
+    }
+
+    private void createGame(){
+        System.out.print("game name");
+        String gameName=scanner.nextLine();
+        try{
+            String response=server.createGame(gameName);
+            System.out.println(response);
+        }catch(Exception e){
+            System.out.println("create game failed" + e.getMessage());
         }
     }
 

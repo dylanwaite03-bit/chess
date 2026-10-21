@@ -62,7 +62,7 @@ public class ServerFacade {
 
     private record CreateGameRequest(String gameName,String authToken){}
 
-    public String createGame(String gameName ) throws Exception{
+    public String createGame(String gameName) throws Exception{
         CreateGameRequest gameRequest=new CreateGameRequest(gameName,authToken);
         String json=gson.toJson(gameRequest);
         HttpRequest request=HttpRequest.newBuilder().uri(URI.create(server_url+"/game")).
