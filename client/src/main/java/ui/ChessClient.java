@@ -112,4 +112,17 @@ public class ChessClient {
         }
     }
 
+    private void playGame(){
+        System.out.print("enter game number");
+        String gameNumber=scanner.nextLine();
+        System.out.print("WHITE or BLACK?");
+        String color=scanner.nextLine().toUpperCase();
+        try{
+            String response=server.playGame();
+            System.out.println(response);
+        }catch(Exception e){
+            System.out.println("create game failed" + e.getMessage());
+        }
+    }
+
 }

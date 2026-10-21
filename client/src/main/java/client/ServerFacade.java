@@ -2,7 +2,6 @@ package client;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import model.UserData;
 
@@ -10,6 +9,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ServerFacade {
     private final String server_url="http://localhost:8080";
@@ -17,6 +18,7 @@ public class ServerFacade {
     private final Gson gson=new Gson();
     private String authToken=null;
     private String username=null;
+    private Map<Integer,Integer> gameChoices=new HashMap<>();
 
     public boolean authenticated(){
         return authToken!=null && !authToken.isEmpty();
@@ -87,6 +89,7 @@ public class ServerFacade {
         String[] gameNames=new String[games.size()];
         for (int i=0; i<games.size();i++){
             gameNames[i]=games.get(i).getAsJsonObject().get("gameName").getAsString();
+
         }
         return gameNames;
     }
@@ -94,7 +97,7 @@ public class ServerFacade {
     public record JoinGameRequest(int gameID, String playerColor, String authToken) {
     }
 
-    public String joinGame(int gameID, String playerColor) throws Exception{
+    public String playGame(int gameID, String playerColor) throws Exception{
         JoinGameRequest registerRequest=new JoinGameRequest(gameID,playerColor,authToken);
         String json=gson.toJson(registerRequest);
         HttpRequest request=HttpRequest.newBuilder().uri(URI.create(server_url+"/game")).
