@@ -1,6 +1,8 @@
 package client;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import model.UserData;
 
@@ -73,14 +75,20 @@ public class ServerFacade {
         return response.body();
     }
 
-    public String listGames() throws Exception{
+    public String[] listGames() throws Exception{
 
         HttpRequest request=HttpRequest.newBuilder().uri(URI.create(server_url+"/game")).
                 header("Content-Type","application/json").
                 header("Authorization",authToken).
                 GET().build();
         HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
-        return response.body();
+        JsonObject json= gson.fromJson(response.body(),JsonObject.class);
+        JsonArray games=json.getAsJsonArray("games");
+        String[] gameNames=new String[games.size()];
+        for (int i=0; i<games.size();i++){
+            gameNames[i]=games.get(i).getAsJsonObject().get("gameName").getAsString();
+        }
+        return gameNames;
     }
 
 

@@ -1,6 +1,8 @@
 package ui;
 
 import client.ServerFacade;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.util.Locale;
 import java.util.Scanner;
