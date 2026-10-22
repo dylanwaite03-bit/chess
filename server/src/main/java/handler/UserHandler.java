@@ -14,7 +14,7 @@ public class UserHandler {
         this.userservice=userservice;
     }
 
-    public void register(Context context) throws Exception{
+    public void register(Context context) {
         RegisterRequest request= gson.fromJson(context.body(),RegisterRequest.class);
         try {
             RegisterResult result = userservice.register(request);

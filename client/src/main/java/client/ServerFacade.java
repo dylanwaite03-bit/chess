@@ -2,6 +2,7 @@ package client;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import model.UserData;
 
@@ -10,6 +11,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ServerFacade {
@@ -18,7 +20,7 @@ public class ServerFacade {
     private final Gson gson=new Gson();
     private String authToken=null;
     private String username=null;
-    private Map<Integer,Integer> gameChoices=new HashMap<>();
+
 
     public boolean authenticated(){
         return authToken!=null && !authToken.isEmpty();
@@ -32,8 +34,9 @@ public class ServerFacade {
                 POST(HttpRequest.BodyPublishers.ofString(json)).build();
 
         HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
-        this.authToken=gson.fromJson(response.body(),JsonObject.class).get("authToken").getAsString();
-        this.username=gson.fromJson(response.body(),JsonObject.class).get("username").getAsString();
+        JsonObject jsonLoad=gson.fromJson(response.body(),JsonObject.class);
+        this.authToken=jsonLoad.get("authToken").getAsString();
+        this.username=jsonLoad.get("username").getAsString();
         return response.body();
     }
 
@@ -45,8 +48,9 @@ public class ServerFacade {
                 POST(HttpRequest.BodyPublishers.ofString(json)).build();
 
         HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
-        this.authToken=gson.fromJson(response.body(),JsonObject.class).get("authToken").getAsString();
-        this.username=gson.fromJson(response.body(),JsonObject.class).get("username").getAsString();
+        JsonObject jsonLoad=gson.fromJson(response.body(),JsonObject.class);
+        this.authToken=jsonLoad.get("authToken").getAsString();
+        this.username=jsonLoad.get("username").getAsString();
         return response.body();
     }
 
@@ -77,7 +81,7 @@ public class ServerFacade {
         return response.body();
     }
 
-    public String[] listGames() throws Exception{
+    public Map<Integer,String> listGames() throws Exception{
 
         HttpRequest request=HttpRequest.newBuilder().uri(URI.create(server_url+"/game")).
                 header("Content-Type","application/json").
@@ -86,12 +90,15 @@ public class ServerFacade {
         HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
         JsonObject json= gson.fromJson(response.body(),JsonObject.class);
         JsonArray games=json.getAsJsonArray("games");
-        String[] gameNames=new String[games.size()];
-        for (int i=0; i<games.size();i++){
-            gameNames[i]=games.get(i).getAsJsonObject().get("gameName").getAsString();
+        Map<Integer,String> gameMap=new LinkedHashMap<>();
 
+        for (JsonElement element:games){
+            JsonObject game= element.getAsJsonObject();
+            int gameID=game.get("gameID").getAsInt();
+            String gameName=game.get("gameName").getAsString();
+            gameMap.put(gameID, gameName);
         }
-        return gameNames;
+        return gameMap;
     }
 
     public record JoinGameRequest(int gameID, String playerColor, String authToken) {

@@ -15,7 +15,7 @@ public class GameHandler {
         this.gameService=gameService;
     }
 
-    public void createGame(Context context) throws Exception{
+    public void createGame(Context context) {
         CreateGameRequest request= gson.fromJson(context.body(),CreateGameRequest.class);
         String authToken=context.header("Authorization");
         try {
@@ -37,7 +37,7 @@ public class GameHandler {
         }
     }
 
-    public void listGames(Context context) throws Exception{
+    public void listGames(Context context) {
         String authToken=context.header("Authorization");
 
         try{
