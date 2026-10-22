@@ -1,6 +1,7 @@
 package ui;
 
 import client.ServerFacade;
+import model.GameData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -108,10 +109,11 @@ public class ChessClient {
     }
     private void listGames(){
         try{
-            Map<Integer,String> response=server.listGames();
+            Map<Integer, GameData> response=server.listGames();
             int i=1;
-            for (Map.Entry<Integer, String> item:response.entrySet()){
-                System.out.println((i)+"."+item.getValue());
+            for (Map.Entry<Integer, GameData> item:response.entrySet()){
+                GameData game=item.getValue();
+                System.out.println((i)+"."+game.gameName());
                 gameChoices.put(i,item.getKey());
                 i++;
             }

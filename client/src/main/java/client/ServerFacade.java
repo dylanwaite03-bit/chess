@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import model.GameData;
 import model.UserData;
 
 import java.net.URI;
@@ -80,7 +81,7 @@ public class ServerFacade {
         return response.body();
     }
 
-    public Map<Integer,String> listGames() throws Exception{
+    public Map<Integer, GameData> listGames() throws Exception{
 
         HttpRequest request=HttpRequest.newBuilder().uri(URI.create(server_url+"/game")).
                 header("Content-Type","application/json").
@@ -89,13 +90,11 @@ public class ServerFacade {
         HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
         JsonObject json= gson.fromJson(response.body(),JsonObject.class);
         JsonArray games=json.getAsJsonArray("games");
-        Map<Integer,String> gameMap=new LinkedHashMap<>();
+        Map<Integer,GameData> gameMap=new LinkedHashMap<>();
 
         for (JsonElement element:games){
-            JsonObject game= element.getAsJsonObject();
-            int gameID=game.get("gameID").getAsInt();
-            String gameName=game.get("gameName").getAsString();
-            gameMap.put(gameID, gameName);
+            GameData gameData=gson.fromJson(element,GameData.class);
+            gameMap.put(gameData.gameID(), gameData);
         }
         return gameMap;
     }
@@ -113,7 +112,6 @@ public class ServerFacade {
         HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
         return response.body();
     }
-
 
 
 
