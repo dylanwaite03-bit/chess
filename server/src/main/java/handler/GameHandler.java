@@ -53,11 +53,22 @@ public class GameHandler {
     public void exceptionhandler(Context context, Exception e){
         String error =e.getMessage();
         int statusCode=500;
-        if ("bad request".equals(error)) statusCode=400;
-        if ("unauthorized".equals(error)) statusCode=401;
-        if ("already taken".equals(error)) statusCode=403;
+        if ("bad request".equals(error)) {statusCode=400;}
+        if ("unauthorized".equals(error)) {statusCode=401;}
+        if ("already taken".equals(error)){ statusCode=403;}
         context.status(statusCode);
         context.json(Map.of("message","Error"+error));
+    }
+
+    public void getGame(Context context){
+        String authToken=context.header("Authorization");
+        try{
+            int gameId=Integer.parseInt("gameID");
+            GameData game=gameService.getGame(gameId,authToken);
+            context.json(game);
+        }catch (Exception e){
+            exceptionhandler(context, e);
+        }
     }
 
 }
