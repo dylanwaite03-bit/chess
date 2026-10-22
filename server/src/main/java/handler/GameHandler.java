@@ -26,7 +26,7 @@ public class GameHandler {
         }
     }
 
-    public void joinGame(Context context)throws Exception{
+    public void joinGame(Context context){
         JoinGameRequest request= gson.fromJson(context.body(),JoinGameRequest.class);
         String authToken= context.header("Authorization");
         try{

@@ -14,17 +14,18 @@ public class SessionHandler {
         this.sessionService=sessionService;
     }
 
-    public void login(Context context) throws Exception{
+    public void login(Context context) {
         LoginRequest request= gson.fromJson(context.body(), LoginRequest.class);
         try{
         LoginResult result=sessionService.login(request);
         context.json(result);
         } catch (Exception e){
-            if(e.getMessage().equals("bad request")){
+            String message=e.getMessage();
+            if(message.equals("bad request")){
                 context.status(400);
                 context.json("{\"message\":\"Error: bad request\"}");
             }
-            else if(e.getMessage().equals("unauthorized")){
+            else if(message.equals("unauthorized")){
                 context.status(401);
                 context.json("{\"message\":\"Error: unauthorized\"}");
             }
@@ -35,7 +36,7 @@ public class SessionHandler {
         }
     }
 
-    public void logout(Context context) throws Exception{
+    public void logout(Context context){
         String authtoken=context.header("Authorization");
         try {
             sessionService.logout(authtoken);
