@@ -4,6 +4,7 @@ import client.ServerFacade;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
@@ -12,7 +13,7 @@ public class ChessClient {
 
     private final Scanner scanner=new Scanner(System.in);
     private final ServerFacade server=new ServerFacade();
-
+    private final Map<Integer,Integer> gameChoices=new HashMap<>();
 
     public void main(){
         while (true) {
@@ -74,6 +75,9 @@ public class ChessClient {
         else if (response.equals("list games")){
             listGames();
         }
+        else if (response.equals("play game")){
+            playGame();
+        }
         else {
             try {
                 System.out.println(response);
@@ -105,9 +109,10 @@ public class ChessClient {
     private void listGames(){
         try{
             Map<Integer,String> response=server.listGames();
-            int i=0;
-            for (String gameName :response.values()){
-                System.out.println((i+1)+"."+gameName);
+            int i=1;
+            for (Map.Entry<Integer, String> item:response.entrySet()){
+                System.out.println((i)+"."+item.getValue());
+                gameChoices.put(i,item.getKey());
             }
         }catch(Exception e){
             System.out.println("create game failed" + e.getMessage());
@@ -120,7 +125,9 @@ public class ChessClient {
         System.out.print("WHITE or BLACK?");
         String color=scanner.nextLine().toUpperCase();
         try{
-            String response=server.playGame();
+            listGames();
+            int gameid=gameChoices.get(Integer.parseInt(gameNumber));
+            String response=server.playGame(gameid,color);
             System.out.println(response);
         }catch(Exception e){
             System.out.println("create game failed" + e.getMessage());
