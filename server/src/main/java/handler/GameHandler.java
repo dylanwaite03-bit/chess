@@ -2,6 +2,7 @@ package handler;
 
 
 import com.google.gson.Gson;
+import model.GameData;
 import service.*;
 
 import io.javalin.http.Context;
@@ -31,8 +32,8 @@ public class GameHandler {
         JoinGameRequest request= gson.fromJson(context.body(),JoinGameRequest.class);
         String authToken= context.header("Authorization");
         try{
-            gameService.joinGame(request,authToken);
-            context.status(200);
+            GameData game=gameService.joinGame(request,authToken);
+            context.json(game);
         }catch (Exception e){
             exceptionhandler(context,e);
         }

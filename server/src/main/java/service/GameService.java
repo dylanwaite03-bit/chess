@@ -30,7 +30,7 @@ public class GameService {
 
     }
 
-    public void joinGame(JoinGameRequest request, String authToken)throws Exception{
+    public GameData joinGame(JoinGameRequest request, String authToken)throws Exception{
         AuthData authData=authDAO.getAuth(authToken);
         if (authData==null){
             throw new Exception("unauthorized");
@@ -41,7 +41,7 @@ public class GameService {
         }
 
         String color= request.playerColor();
-        if(color!=null) {
+
             if (!"WHITE".equals(color) &&
                     !"BLACK".equals(color)) {
                 throw new Exception("bad request");
@@ -64,7 +64,7 @@ public class GameService {
                 gameDAO.updateGame(updatedGame);
             }
 
-        }
+        return gameDAO.getGame(request.gameID());
     }
 
     public ListGameResult listGames(String authToken) throws Exception{
