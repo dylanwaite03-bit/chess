@@ -6,6 +6,8 @@ import service.LoginRequest;
 import service.LoginResult;
 import service.SessionService;
 
+import java.util.Map;
+
 public class SessionHandler {
     private final SessionService sessionService;
     private final Gson gson=new Gson();

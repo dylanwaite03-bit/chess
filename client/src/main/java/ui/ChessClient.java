@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ChessClient {
@@ -103,9 +104,10 @@ public class ChessClient {
     }
     private void listGames(){
         try{
-            String[] response=server.listGames();
-            for (int i=0; i<response.length;i++){
-                System.out.println((i+1)+"."+response[i]);
+            Map<Integer,String> response=server.listGames();
+            int i=0;
+            for (String gameName :response.values()){
+                System.out.println((i+1)+"."+gameName);
             }
         }catch(Exception e){
             System.out.println("create game failed" + e.getMessage());

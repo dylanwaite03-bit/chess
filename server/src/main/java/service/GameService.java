@@ -16,11 +16,11 @@ public class GameService {
 
     public CreateGameResult createGame(CreateGameRequest request, String authToken) throws Exception{
         AuthData authdata=authDAO.getAuth(authToken);
+        if (request==null || request.gameName()==null){
+            throw new Exception("bad request");
+        }
         if (authdata==null){
             throw new Exception("unauthorized");
-        }
-        if (request.gameName()==null){
-            throw new Exception("bad request");
         }
 
         GameData game=new GameData(0,null,null, request.gameName(),null);
