@@ -2,10 +2,11 @@ package handler;
 
 
 import com.google.gson.Gson;
-import io.javalin.http.ExceptionHandler;
 import service.*;
 
 import io.javalin.http.Context;
+
+import java.util.Map;
 
 public class GameHandler {
     private final GameService gameService;
@@ -49,22 +50,13 @@ public class GameHandler {
     }
 
     public void exceptionhandler(Context context, Exception e){
-        if(e.getMessage().equals("bad request")){
-            context.status(400);
-            context.json("{\"message\":\"Error: bad request\"}");
-        }
-        else if(e.getMessage().equals("unauthorized")){
-            context.status(401);
-            context.json("{\"message\":\"Error: unauthorized\"}");
-        }
-        else if(e.getMessage().equals("already taken")){
-            context.status(403);
-            context.json("{\"message\":\"Error: already taken\"}");
-        }
-        else{
-            context.status(500);
-            context.json("{\"message\":\"Error:" +e.getMessage() +"\"}");
-        }
+        String error =e.getMessage();
+        int statusCode=500;
+        if ("bad request".equals(error)) statusCode=400;
+        if ("unauthorized".equals(error)) statusCode=401;
+        if ("already taken".equals(error)) statusCode=403;
+        context.status(statusCode);
+        context.json(Map.of("message","Error"+error));
     }
 
 }
