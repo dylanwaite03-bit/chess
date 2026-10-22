@@ -1,11 +1,8 @@
 package ui;
 
 import client.ServerFacade;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -78,6 +75,9 @@ public class ChessClient {
         else if (response.equals("play game")){
             playGame();
         }
+        else if (response.equals("observe game")){
+            observeGame();
+        }
         else {
             try {
                 System.out.println(response);
@@ -128,11 +128,25 @@ public class ChessClient {
         String color=scanner.nextLine().toUpperCase();
         try{
             int gameid=gameChoices.get(Integer.parseInt(gameNumber));
-            String response=server.playGame(gameid,color);
+            String response=server.joinGame(gameid,color);
             System.out.println(response);
         }catch(Exception e){
             System.out.println("join game failed" + e.getMessage());
         }
     }
+
+    private void observeGame(){
+        listGames();
+        System.out.print("enter game number to observe");
+        String gameNumber=scanner.nextLine();
+        try{
+            int gameid=gameChoices.get(Integer.parseInt(gameNumber));
+            String response=server.joinGame(gameid,null);
+            System.out.println(response);
+        }catch(Exception e){
+            System.out.println("join game failed" + e.getMessage());
+        }
+    }
+
 
 }
