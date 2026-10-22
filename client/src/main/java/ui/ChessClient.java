@@ -113,6 +113,7 @@ public class ChessClient {
             for (Map.Entry<Integer, String> item:response.entrySet()){
                 System.out.println((i)+"."+item.getValue());
                 gameChoices.put(i,item.getKey());
+                i++;
             }
         }catch(Exception e){
             System.out.println("create game failed" + e.getMessage());
@@ -120,17 +121,17 @@ public class ChessClient {
     }
 
     private void playGame(){
+        listGames();
         System.out.print("enter game number");
         String gameNumber=scanner.nextLine();
         System.out.print("WHITE or BLACK?");
         String color=scanner.nextLine().toUpperCase();
         try{
-            listGames();
             int gameid=gameChoices.get(Integer.parseInt(gameNumber));
             String response=server.playGame(gameid,color);
             System.out.println(response);
         }catch(Exception e){
-            System.out.println("create game failed" + e.getMessage());
+            System.out.println("join game failed" + e.getMessage());
         }
     }
 

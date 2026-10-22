@@ -109,7 +109,7 @@ public class ServerFacade {
         String json=gson.toJson(registerRequest);
         HttpRequest request=HttpRequest.newBuilder().uri(URI.create(server_url+"/game")).
                 header("Content-Type","application/json").
-                header("Authentication",authToken).
+                header("Authorization",authToken).
                 PUT(HttpRequest.BodyPublishers.ofString(json)).build();
         HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
         return response.body();
