@@ -60,15 +60,6 @@ public class GameHandler {
         context.json(Map.of("message","Error"+error));
     }
 
-    public void getGame(Context context){
-        String authToken=context.header("Authorization");
-        try{
-            int gameId=Integer.parseInt("gameID");
-            GameData game=gameService.getGame(gameId,authToken);
-            context.json(game);
-        }catch (Exception e){
-            exceptionhandler(context, e);
-        }
-    }
+
 
 }

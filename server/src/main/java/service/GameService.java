@@ -77,14 +77,6 @@ public class GameService {
         return new ListGameResult(gameDAO.listGames());
     }
 
-    public GameData getGame(int gameID, String authToken) throws Exception{
-        AuthData authData=authDAO.getAuth(authToken);
-        if (authData==null){
-            throw new Exception("unauthorized");
-        }
-        GameData game=gameDAO.getGame(gameID);
 
-        return game;
-    }
 
 }
