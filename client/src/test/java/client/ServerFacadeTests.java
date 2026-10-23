@@ -1,8 +1,10 @@
 package client;
 
+import model.GameData;
 import org.junit.jupiter.api.*;
 import server.Server;
 
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -72,8 +74,18 @@ public class ServerFacadeTests {
     public void loginbadTest()throws Exception{
         facade.register("dyl","pass","email");
         facade.logout();
-        facade.login("dyl","ps");
+        assertThrows(Exception.class,() -> facade.login("dyl","ps"));
         assertFalse(facade.authenticated());
     }
+
+    @Test
+    public void createGameGoodTest()throws Exception{
+        facade.register("dyl","pass","email");
+        facade.createGame("coolgame");
+        assertTrue(facade.authenticated());
+        Map<Integer, GameData> gamelist=facade.listGames();
+        assertEquals(gamelist.size(),1);
+    }
+
 
 }
