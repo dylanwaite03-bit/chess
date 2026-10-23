@@ -87,5 +87,26 @@ public class ServerFacadeTests {
         assertEquals(gamelist.size(),1);
     }
 
+    @Test
+    public void joinGameGoodTest()throws Exception{
+        facade.register("dyl","pass","email");
+        facade.createGame("coolgame");
+        facade.joinGame(1,"WHITE");
+        GameData game =facade.listGames().get(1);
+        assertEquals("dyl",game.whiteUsername());
+    }
+
+    @Test
+    public void joinGameBadTest()throws Exception{
+        facade.register("dyl","pass","email");
+        facade.createGame("coolgame");
+        facade.joinGame(1,"WHITE");
+        ServerFacade secondPerson=new ServerFacade();
+        secondPerson.register("bill","ps","email2");
+        secondPerson.joinGame(1,"WHITE");
+        GameData game =facade.listGames().get(1);
+        assertEquals("dyl",game.whiteUsername());
+    }
+
 
 }
