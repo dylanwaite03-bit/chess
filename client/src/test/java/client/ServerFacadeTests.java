@@ -3,10 +3,16 @@ package client;
 import org.junit.jupiter.api.*;
 import server.Server;
 
+import java.util.concurrent.ExecutionException;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class ServerFacadeTests {
 
     private static Server server;
+    private static ServerFacade facade=new ServerFacade();
 
     @BeforeAll
     public static void init() {
@@ -20,10 +26,27 @@ public class ServerFacadeTests {
         server.stop();
     }
 
+    @BeforeAll
+
 
     @Test
     public void sampleTest() {
-        Assertions.assertTrue(true);
+        assertTrue(true);
+    }
+
+    @Test
+    public void registerGoodTest()throws Exception{
+        String response=facade.register("dyl","pass","email");
+        assertTrue(facade.authenticated());
+        assertTrue(response.contains("dyl"));
+    }
+
+    @Test
+    public void registerBadTest()throws Exception{
+        facade.register("dyl","pass","email");
+        ServerFacade secondPerson=new ServerFacade();
+        secondPerson.register("dyl","pass","email");
+        assertFalse(facade.authenticated());
     }
 
 }
