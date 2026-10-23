@@ -113,6 +113,11 @@ public class ServerFacade {
         return response.body();
     }
 
-
+    public String clearDb() throws Exception{
+        HttpRequest request=HttpRequest.newBuilder().uri(URI.create(server_url+"/db")).
+                DELETE().build();
+        HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
+        return response.body();
+    }
 
 }
