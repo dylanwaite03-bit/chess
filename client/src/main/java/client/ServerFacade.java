@@ -15,7 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ServerFacade {
-    private final String server_url="http://localhost:8080";
+    private final String serverUrl ="http://localhost:8080";
     private final HttpClient client= HttpClient.newHttpClient();
     private final Gson gson=new Gson();
     private String authToken=null;
@@ -29,7 +29,7 @@ public class ServerFacade {
     public String register(String username,String password, String email) throws Exception{
         UserData registerRequest=new UserData(username,password,email);
         String json=gson.toJson(registerRequest);
-        HttpRequest request=HttpRequest.newBuilder().uri(URI.create(server_url+"/user")).
+        HttpRequest request=HttpRequest.newBuilder().uri(URI.create(serverUrl +"/user")).
                 header("Content-Type","application/json").
                 POST(HttpRequest.BodyPublishers.ofString(json)).build();
 
@@ -43,7 +43,7 @@ public class ServerFacade {
     public String login (String username,String password) throws Exception{
         LoginRquest loginrequest=new LoginRquest(username,password);
         String json=gson.toJson(loginrequest);
-        HttpRequest request=HttpRequest.newBuilder().uri(URI.create(server_url+"/session")).
+        HttpRequest request=HttpRequest.newBuilder().uri(URI.create(serverUrl +"/session")).
                 header("Content-Type","application/json").
                 POST(HttpRequest.BodyPublishers.ofString(json)).build();
 
@@ -58,7 +58,7 @@ public class ServerFacade {
 
     public String logout () throws Exception{
 
-        HttpRequest request=HttpRequest.newBuilder().uri(URI.create(server_url+"/session")).
+        HttpRequest request=HttpRequest.newBuilder().uri(URI.create(serverUrl +"/session")).
                 header("Authorization",authToken).
                 DELETE().build();
 
@@ -73,7 +73,7 @@ public class ServerFacade {
     public String createGame(String gameName) throws Exception{
         CreateGameRequest gameRequest=new CreateGameRequest(gameName,authToken);
         String json=gson.toJson(gameRequest);
-        HttpRequest request=HttpRequest.newBuilder().uri(URI.create(server_url+"/game")).
+        HttpRequest request=HttpRequest.newBuilder().uri(URI.create(serverUrl +"/game")).
                 header("Content-Type","application/json").
                 header("Authorization",authToken).
                 POST(HttpRequest.BodyPublishers.ofString(json)).build();
@@ -83,7 +83,7 @@ public class ServerFacade {
 
     public Map<Integer, GameData> listGames() throws Exception{
 
-        HttpRequest request=HttpRequest.newBuilder().uri(URI.create(server_url+"/game")).
+        HttpRequest request=HttpRequest.newBuilder().uri(URI.create(serverUrl +"/game")).
                 header("Content-Type","application/json").
                 header("Authorization",authToken).
                 GET().build();
@@ -105,7 +105,7 @@ public class ServerFacade {
     public String joinGame(int gameID, String playerColor) throws Exception{
         JoinGameRequest registerRequest=new JoinGameRequest(gameID,playerColor,authToken);
         String json=gson.toJson(registerRequest);
-        HttpRequest request=HttpRequest.newBuilder().uri(URI.create(server_url+"/game")).
+        HttpRequest request=HttpRequest.newBuilder().uri(URI.create(serverUrl +"/game")).
                 header("Content-Type","application/json").
                 header("Authorization",authToken).
                 PUT(HttpRequest.BodyPublishers.ofString(json)).build();
@@ -114,7 +114,7 @@ public class ServerFacade {
     }
 
     public String clearDb() throws Exception{
-        HttpRequest request=HttpRequest.newBuilder().uri(URI.create(server_url+"/db")).
+        HttpRequest request=HttpRequest.newBuilder().uri(URI.create(serverUrl +"/db")).
                 DELETE().build();
         HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
         return response.body();
