@@ -88,6 +88,9 @@ public class ChessClient {
         else if (response.equals("observe game")){
             observeGame();
         }
+        else if (response.equals("help")){
+            System.out.println("Type logout, create game, list games, play game, or observe game");
+        }
         else {
             try {
                 System.out.println(response);
