@@ -57,8 +57,23 @@ public class ServerFacadeTests {
         facade.register("dyl","pass","email");
         facade.logout();
         assertFalse(facade.authenticated());
+    }
+
+    @Test
+    public void loginGoodTest()throws Exception{
+        facade.register("dyl","pass","email");
+        facade.logout();
+        facade.login("dyl","pass");
+        assertTrue(facade.authenticated());
 
     }
 
+    @Test
+    public void loginbadTest()throws Exception{
+        facade.register("dyl","pass","email");
+        facade.logout();
+        facade.login("dyl","ps");
+        assertFalse(facade.authenticated());
+    }
 
 }
