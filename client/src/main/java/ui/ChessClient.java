@@ -130,9 +130,15 @@ public class ChessClient {
         System.out.print("WHITE or BLACK?");
         String color=scanner.nextLine().toUpperCase();
         try{
+            if (color.equals("WHITE")){
+                gamePlayScreen.whitePerspective();
+            } else if (color.equals("BLACK")) {
+                gamePlayScreen.blackPerspective();
+            }
             int gameid=gameChoices.get(Integer.parseInt(gameNumber));
             String response=server.joinGame(gameid,color);
             System.out.println(response);
+
         }catch(Exception e){
             System.out.println("join game failed" + e.getMessage());
         }
