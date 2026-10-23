@@ -20,14 +20,22 @@ public class ChessClient {
                 mainscreen();
             }
             else {
-                System.out.println("1: Login");
-                System.out.println("2: Create account");
+                System.out.println("Login");
+                System.out.println("Create account");
+                System.out.println("Help");
+                System.out.println("Quit");
                 String choice = scanner.nextLine().toLowerCase();
                 if (choice.equals("login")) {
                     login();
                 }
                 if (choice.equals("create account")) {
                     register();
+                }
+                if (choice.equals("help")){
+                    System.out.println("Type Login, Regiser, or Quit");
+                }
+                if (choice.equals("quit")){
+                    break;
                 }
             }
         }
@@ -154,8 +162,5 @@ public class ChessClient {
             System.out.println("join game failed" + e.getMessage());
         }
     }
-
-
-
 
 }
