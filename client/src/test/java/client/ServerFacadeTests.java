@@ -26,8 +26,10 @@ public class ServerFacadeTests {
         server.stop();
     }
 
-    @BeforeAll
-
+    @BeforeEach
+    public void clearfacade(){
+        facade=new ServerFacade();
+    }
 
     @Test
     public void sampleTest() {
