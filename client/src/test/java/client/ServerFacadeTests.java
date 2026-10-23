@@ -51,4 +51,14 @@ public class ServerFacadeTests {
         assertFalse(secondPerson.authenticated());
     }
 
+
+    @Test
+    public void logoutGoodTest()throws Exception{
+        facade.register("dyl","pass","email");
+        facade.logout();
+        assertFalse(facade.authenticated());
+
+    }
+
+
 }
