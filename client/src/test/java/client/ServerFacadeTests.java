@@ -5,8 +5,7 @@ import server.Server;
 
 import java.util.concurrent.ExecutionException;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class ServerFacadeTests {
@@ -48,8 +47,8 @@ public class ServerFacadeTests {
     public void registerBadTest()throws Exception{
         facade.register("dyl","pass","email");
         ServerFacade secondPerson=new ServerFacade();
-        secondPerson.register("dyl","pass","email");
-        assertFalse(facade.authenticated());
+        assertThrows(Exception.class,() -> secondPerson.register("dyl","pass","email"));
+        assertFalse(secondPerson.authenticated());
     }
 
 }
