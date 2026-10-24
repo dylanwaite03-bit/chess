@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import io.javalin.http.Context;
 import service.*;
 
+import java.util.Map;
+
 public class SessionHandler {
     private final SessionService sessionService;
     private final Gson gson=new Gson();
@@ -21,15 +23,15 @@ public class SessionHandler {
             String message=e.getMessage();
             if(message.equals("bad request")){
                 context.status(400);
-                context.json("{\"message\":\"Error: bad request\"}");
+                context.json(Map.of("message","Error bad request"));
             }
             else if(message.equals("unauthorized")){
                 context.status(401);
-                context.json("{\"message\":\"Error: unauthorized\"}");
+                context.json(Map.of("message","Error unauthorized"));
             }
             else{
                 context.status(500);
-                context.json("{\"message\":\"Error:" +e.getMessage() +"\"}");
+                context.json(Map.of("message","Error"+e.getMessage()));
             }
         }
     }
@@ -42,11 +44,11 @@ public class SessionHandler {
         }catch (Exception e){
             if(e.getMessage().equals("unauthorized")){
                 context.status(401);
-                context.json("{\"message\":\"Error: unauthorized\"}");
+                context.json(Map.of("message","Error unauthorized"));
             }
             else{
                 context.status(500);
-                context.json("{\"message\":\"Error:" +e.getMessage() +"\"}");
+                context.json(Map.of("message","Error"+e.getMessage()));
             }
         }
     }
@@ -59,15 +61,15 @@ public class SessionHandler {
         }catch (Exception e){
             if(e.getMessage().equals("bad request")){
                 context.status(400);
-                context.json("{\"message\":\"Error: bad request\"}");
+                context.json(Map.of("message","Error bad request"));
             }
             else if(e.getMessage().equals("already taken")){
                 context.status(403);
-                context.json("{\"message\":\"Error: unauthorized\"}");
+                context.json(Map.of("message","Error unauthorized"));
             }
             else{
                 context.status(500);
-                context.json("{\"message\":\"Error:" +e.getMessage() +"\"}");
+                context.json(Map.of("message","Error"+e.getMessage()));
             }
         }
     }
@@ -78,7 +80,7 @@ public class SessionHandler {
             context.status(200).json("{}");
         }catch(Exception e){
             context.status(500);
-            context.json("{\"message\":\"Error:" +e.getMessage() +"\"}");
+            context.json(Map.of("message","Error"+e.getMessage()));
         }
     }
 }
