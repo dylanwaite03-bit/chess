@@ -8,10 +8,8 @@ import dataaccess.sql.SQLUserDAO;
 import handler.GameHandler;
 import io.javalin.*;
 import com.google.gson.Gson;
-import handler.UserHandler;
 import io.javalin.json.JavalinGson;
 import service.GameService;
-import service.UserService;
 import handler.ClearHandler;
 import service.ClearService;
 import handler.SessionHandler;
@@ -40,8 +38,6 @@ public class Server {
         AuthDAO authDAO=new SQLAuthDAO();
         GameDAO gameDAO=new SQLGameDAO();
 
-        UserService userService=new UserService(userDAO,authDAO);
-        UserHandler userHandler=new UserHandler(userService);
 
         SessionService sessionService=new SessionService(userDAO, authDAO);
         SessionHandler sessionHandler=new SessionHandler(sessionService);
@@ -52,7 +48,7 @@ public class Server {
         ClearService clearService=new ClearService(userDAO,authDAO,gameDAO);
         ClearHandler clearHandler=new ClearHandler(clearService);
 
-        javalin.post("/user", userHandler::register);
+        javalin.post("/user", sessionHandler::register);
         javalin.post("/session", sessionHandler::login);
         javalin.post("/game", gameHandler::createGame);
         javalin.put("/game",gameHandler::joinGame);

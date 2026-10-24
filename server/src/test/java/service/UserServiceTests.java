@@ -16,7 +16,7 @@ public class UserServiceTests {
         UserDAO userDAO=new MemoryUserDAO();
         AuthDAO authDAO=new MemoryAuthDAO();
 
-        UserService userService=new UserService(userDAO,authDAO);
+        SessionService userService=new SessionService(userDAO,authDAO);
 
         RegisterRequest request=new RegisterRequest("dylan","password","email@e.com");
 
@@ -31,7 +31,7 @@ public class UserServiceTests {
         UserDAO userDAO=new MemoryUserDAO();
         AuthDAO authDAO=new MemoryAuthDAO();
 
-        UserService userService=new UserService(userDAO,authDAO);
+        SessionService userService=new SessionService(userDAO,authDAO);
 
         UserData existinguser=new UserData("dylan","password","email@e.com");
         userDAO.createUser(existinguser);
@@ -46,7 +46,7 @@ public class UserServiceTests {
         UserDAO userDAO=new MemoryUserDAO();
         AuthDAO authDAO=new MemoryAuthDAO();
 
-        UserService userService=new UserService(userDAO,authDAO);
+        SessionService userService=new SessionService(userDAO,authDAO);
 
         RegisterRequest request=new RegisterRequest(null,"password","email@e.com");
 
