@@ -1,5 +1,6 @@
 package service;
 import dataaccess.AuthDAO;
+import dataaccess.GameDAO;
 import dataaccess.UserDAO;
 import model.AuthData;
 import model.UserData;
@@ -11,10 +12,12 @@ import java.util.UUID;
 public class SessionService {
     private final UserDAO userDAO;
     private final AuthDAO authDAO;
+    private final GameDAO gameDAO;
 
-    public SessionService(UserDAO userDAO, AuthDAO authDAO){
+    public SessionService(UserDAO userDAO, AuthDAO authDAO, GameDAO gameDAO){
         this.userDAO=userDAO;
         this.authDAO=authDAO;
+        this.gameDAO=gameDAO;
     }
 
     public LoginResult login(LoginRequest request) throws Exception{
@@ -67,6 +70,12 @@ public class SessionService {
         AuthData authData= new AuthData(authToken, request.username());
         authDAO.createAuth(authData);
         return new RegisterResult(request.username(), authToken);
+    }
+
+    public void clear() throws Exception{
+        userDAO.clear();
+        authDAO.clear();
+        gameDAO.clear();
     }
 
 
