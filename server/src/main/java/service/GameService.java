@@ -44,27 +44,27 @@ public class GameService {
 
         String color= request.playerColor();
 
-            if (!"WHITE".equals(color) &&
-                    !"BLACK".equals(color)) {
-                throw new Exception("bad request");
-            }
+        if (!"WHITE".equals(color) &&
+                !"BLACK".equals(color)) {
+            throw new Exception("bad request");
+        }
 
-            if ("WHITE".equals(color)) {
-                if (game.whiteUsername() != null) {
-                    throw new Exception("already taken");
-                }
-                GameData updatedGame = new GameData(game.gameID(), authData.username(),
-                        game.blackUsername(), game.gameName(), game.game());
-                gameDAO.updateGame(updatedGame);
+        if ("WHITE".equals(color)) {
+            if (game.whiteUsername() != null) {
+                throw new Exception("already taken");
             }
-            if ("BLACK".equals(color)) {
-                if (game.blackUsername() != null) {
-                    throw new Exception("already taken");
-                }
-                GameData updatedGame = new GameData(game.gameID(), game.whiteUsername(),
-                        authData.username(), game.gameName(), game.game());
-                gameDAO.updateGame(updatedGame);
+            GameData updatedGame = new GameData(game.gameID(), authData.username(),
+                    game.blackUsername(), game.gameName(), game.game());
+            gameDAO.updateGame(updatedGame);
+        }
+        if ("BLACK".equals(color)) {
+            if (game.blackUsername() != null) {
+                throw new Exception("already taken");
             }
+            GameData updatedGame = new GameData(game.gameID(), game.whiteUsername(),
+                    authData.username(), game.gameName(), game.game());
+            gameDAO.updateGame(updatedGame);
+        }
 
         return gameDAO.getGame(request.gameID());
     }
