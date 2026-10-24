@@ -34,6 +34,9 @@ public class ServerFacade {
                 POST(HttpRequest.BodyPublishers.ofString(json)).build();
 
         HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode()!=200){
+            return response.body();
+        }
         JsonObject jsonLoad=gson.fromJson(response.body(),JsonObject.class);
         this.authToken=jsonLoad.get("authToken").getAsString();
         this.username=jsonLoad.get("username").getAsString();
