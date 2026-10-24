@@ -35,7 +35,7 @@ public class ServerFacade {
 
         HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
         if (response.statusCode()!=200){
-            return response.body();
+            throw new Exception("register failed");
         }
         JsonObject jsonLoad=gson.fromJson(response.body(),JsonObject.class);
         this.authToken=jsonLoad.get("authToken").getAsString();
@@ -52,7 +52,7 @@ public class ServerFacade {
 
         HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
         if (response.statusCode()!=200){
-            return response.body();
+            throw new Exception("login failed");
         }
         JsonObject jsonLoad=gson.fromJson(response.body(),JsonObject.class);
         this.authToken=jsonLoad.get("authToken").getAsString();
