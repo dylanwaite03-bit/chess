@@ -5,12 +5,10 @@ import dataaccess.sql.DbInitializer;
 import dataaccess.sql.SQLAuthDAO;
 import dataaccess.sql.SQLGameDAO;
 import dataaccess.sql.SQLUserDAO;
-import handler.GameHandler;
 import io.javalin.*;
 import com.google.gson.Gson;
 import io.javalin.json.JavalinGson;
 import service.GameService;
-import handler.SessionHandler;
 import service.SessionService;
 
 public class Server {
