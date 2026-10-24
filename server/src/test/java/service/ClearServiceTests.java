@@ -16,7 +16,7 @@ public class ClearServiceTests {
         AuthDAO authDAO=new MemoryAuthDAO();
         GameDAO gameDAO=new MemoryGameDAO();
 
-        ClearService clearService=new ClearService(userDAO,authDAO,gameDAO);
+        SessionService clearService=new SessionService(userDAO,authDAO,gameDAO);
 
         userDAO.createUser(new UserData("dylan", "password", "email@e.com"));
 

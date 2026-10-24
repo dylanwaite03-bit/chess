@@ -10,8 +10,6 @@ import io.javalin.*;
 import com.google.gson.Gson;
 import io.javalin.json.JavalinGson;
 import service.GameService;
-import handler.ClearHandler;
-import service.ClearService;
 import handler.SessionHandler;
 import service.SessionService;
 
