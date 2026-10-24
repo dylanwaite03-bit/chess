@@ -1,9 +1,6 @@
 package service;
 
-import dataaccess.AuthDAO;
-import dataaccess.MemoryAuthDAO;
-import dataaccess.MemoryUserDAO;
-import dataaccess.UserDAO;
+import dataaccess.*;
 import dataaccess.sql.SQLAuthDAO;
 import dataaccess.sql.SQLUserDAO;
 import model.AuthData;
@@ -19,8 +16,9 @@ public class SessionServiceTests {
     public void successlogin() throws Exception{
         UserDAO userDAO=new MemoryUserDAO();
         AuthDAO authDAO=new MemoryAuthDAO();
+        GameDAO gameDAO=new MemoryGameDAO();
 
-        SessionService sessionService=new SessionService(userDAO,authDAO);
+        SessionService sessionService=new SessionService(userDAO,authDAO,gameDAO);
         String hashedpassword= BCrypt.hashpw("password",BCrypt.gensalt());
         UserData user= new UserData( "dylan",
                 hashedpassword,
@@ -37,8 +35,9 @@ public class SessionServiceTests {
     public void wrongpasswordlogin() throws Exception{
         UserDAO userDAO=new MemoryUserDAO();
         AuthDAO authDAO=new MemoryAuthDAO();
+        GameDAO gameDAO=new MemoryGameDAO();
 
-        SessionService sessionService=new SessionService(userDAO,authDAO);
+        SessionService sessionService=new SessionService(userDAO,authDAO,gameDAO);
         UserData user= new UserData( "dylan",
                 "password",
                 "email@e.com");
@@ -53,8 +52,9 @@ public class SessionServiceTests {
     public void wrongusernamelogin() throws Exception{
         UserDAO userDAO=new MemoryUserDAO();
         AuthDAO authDAO=new MemoryAuthDAO();
+        GameDAO gameDAO=new MemoryGameDAO();
 
-        SessionService sessionService=new SessionService(userDAO,authDAO);
+        SessionService sessionService=new SessionService(userDAO,authDAO,gameDAO);
         UserData user= new UserData( "dylan",
                 "password",
                 "email@e.com");
@@ -69,8 +69,9 @@ public class SessionServiceTests {
     public void logoutsuccessfull() throws Exception{
         UserDAO userDAO=new MemoryUserDAO();
         AuthDAO authDAO=new MemoryAuthDAO();
+        GameDAO gameDAO=new MemoryGameDAO();
 
-        SessionService sessionService=new SessionService(userDAO,authDAO);
+        SessionService sessionService=new SessionService(userDAO,authDAO,gameDAO);
         AuthData authData = new AuthData("token123", "dylan");
 
         authDAO.createAuth(authData);
@@ -83,8 +84,9 @@ public class SessionServiceTests {
     public void logoutinvalid()throws Exception{
         UserDAO userDAO=new MemoryUserDAO();
         AuthDAO authDAO=new MemoryAuthDAO();
+        GameDAO gameDAO=new MemoryGameDAO();
 
-        SessionService sessionService=new SessionService(userDAO,authDAO);
+        SessionService sessionService=new SessionService(userDAO,authDAO,gameDAO);
 
         assertThrows(Exception.class, () -> sessionService.logout("badtoken"));
     }
@@ -93,8 +95,9 @@ public class SessionServiceTests {
     public void badrequestlogin()throws Exception{
         UserDAO userDAO=new MemoryUserDAO();
         AuthDAO authDAO=new MemoryAuthDAO();
+        GameDAO gameDAO=new MemoryGameDAO();
 
-        SessionService sessionService=new SessionService(userDAO,authDAO);
+        SessionService sessionService=new SessionService(userDAO,authDAO,gameDAO);
 
         LoginRequest request=new LoginRequest(null,"password");
 

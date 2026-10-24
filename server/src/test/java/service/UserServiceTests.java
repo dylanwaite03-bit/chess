@@ -1,9 +1,7 @@
 package service;
 
-import dataaccess.AuthDAO;
-import dataaccess.MemoryAuthDAO;
-import dataaccess.MemoryUserDAO;
-import dataaccess.UserDAO;
+import dataaccess.*;
+import model.GameData;
 import model.UserData;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +13,9 @@ public class UserServiceTests {
     public void registerSuccess() throws Exception{
         UserDAO userDAO=new MemoryUserDAO();
         AuthDAO authDAO=new MemoryAuthDAO();
+        GameDAO gameDAO=new MemoryGameDAO();
 
-        SessionService userService=new SessionService(userDAO,authDAO);
+        SessionService userService=new SessionService(userDAO,authDAO,gameDAO);
 
         RegisterRequest request=new RegisterRequest("dylan","password","email@e.com");
 
@@ -30,8 +29,9 @@ public class UserServiceTests {
     public void registerAlreadyTaken() throws Exception{
         UserDAO userDAO=new MemoryUserDAO();
         AuthDAO authDAO=new MemoryAuthDAO();
+        GameDAO gameDAO=new MemoryGameDAO();
 
-        SessionService userService=new SessionService(userDAO,authDAO);
+        SessionService userService=new SessionService(userDAO,authDAO,gameDAO);
 
         UserData existinguser=new UserData("dylan","password","email@e.com");
         userDAO.createUser(existinguser);
@@ -45,8 +45,9 @@ public class UserServiceTests {
     public void registerbadrequest() throws Exception{
         UserDAO userDAO=new MemoryUserDAO();
         AuthDAO authDAO=new MemoryAuthDAO();
+        GameDAO gameDAO=new MemoryGameDAO();
 
-        SessionService userService=new SessionService(userDAO,authDAO);
+        SessionService userService=new SessionService(userDAO,authDAO, gameDAO);
 
         RegisterRequest request=new RegisterRequest(null,"password","email@e.com");
 
