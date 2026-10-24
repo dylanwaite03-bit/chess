@@ -39,14 +39,12 @@ public class Server {
         GameDAO gameDAO=new SQLGameDAO();
 
 
-        SessionService sessionService=new SessionService(userDAO, authDAO);
+        SessionService sessionService=new SessionService(userDAO, authDAO,gameDAO);
         SessionHandler sessionHandler=new SessionHandler(sessionService);
 
         GameService gameService=new GameService(gameDAO, authDAO);
         GameHandler gameHandler=new GameHandler(gameService);
 
-        ClearService clearService=new ClearService(userDAO,authDAO,gameDAO);
-        ClearHandler clearHandler=new ClearHandler(clearService);
 
         javalin.post("/user", sessionHandler::register);
         javalin.post("/session", sessionHandler::login);
@@ -54,7 +52,7 @@ public class Server {
         javalin.put("/game",gameHandler::joinGame);
         javalin.get("/game",gameHandler::listGames);
         javalin.delete("/session",sessionHandler::logout);
-        javalin.delete("/db",clearHandler::clear);
+        javalin.delete("/db",sessionHandler::clear);
     }
 
     public int run(int desiredPort) {
