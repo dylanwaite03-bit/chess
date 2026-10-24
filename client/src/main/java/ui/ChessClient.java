@@ -28,13 +28,13 @@ public class ChessClient {
                 if (choice.equals("login")) {
                     login();
                 }
-                if (choice.equals("create account")) {
+                else if (choice.equals("create account")) {
                     register();
                 }
-                if (choice.equals("help")){
+                else if (choice.equals("help")){
                     System.out.println("Type Login, Regiser, or Quit");
                 }
-                if (choice.equals("quit")){
+                else if (choice.equals("quit")){
                     break;
                 }
             }
@@ -92,11 +92,9 @@ public class ChessClient {
             System.out.println("Type logout, create game, list games, play game, or observe game");
         }
         else {
-            try {
-                System.out.println(response);
-            } catch (Exception e) {
-                System.out.println("failed" + e.getMessage());
-            }
+
+            System.out.println("Invalid command");
+
         }
     }
 
@@ -130,7 +128,7 @@ public class ChessClient {
                 i++;
             }
         }catch(Exception e){
-            System.out.println("create game failed" + e.getMessage());
+            System.out.println("list game failed" + e.getMessage());
         }
     }
 
