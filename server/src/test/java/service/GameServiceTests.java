@@ -130,7 +130,7 @@ public class GameServiceTests {
                 new CreateGameRequest("Chess Game"),
                 "token123");
 
-        assertEquals(1, gameService.listGames("token123").games().size());
+        assertEquals(1, gameService.listGames("token123").size());
     }
 
 }

@@ -7,6 +7,7 @@ import service.*;
 
 import io.javalin.http.Context;
 
+import java.util.List;
 import java.util.Map;
 
 public class GameHandler {
@@ -43,8 +44,8 @@ public class GameHandler {
         String authToken=context.header("Authorization");
 
         try{
-            ListGameResult result=gameService.listGames(authToken);
-            context.json(result);
+            List<GameData> result=gameService.listGames(authToken);
+            context.json(Map.of("games",result));
         } catch (Exception e) {
             exceptionhandler(context,e);
         }
