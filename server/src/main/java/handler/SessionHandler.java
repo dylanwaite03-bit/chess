@@ -2,9 +2,7 @@ package handler;
 
 import com.google.gson.Gson;
 import io.javalin.http.Context;
-import service.LoginRequest;
-import service.LoginResult;
-import service.SessionService;
+import service.*;
 
 import java.util.Map;
 
@@ -46,6 +44,27 @@ public class SessionHandler {
         }catch (Exception e){
             if(e.getMessage().equals("unauthorized")){
                 context.status(401);
+                context.json("{\"message\":\"Error: unauthorized\"}");
+            }
+            else{
+                context.status(500);
+                context.json("{\"message\":\"Error:" +e.getMessage() +"\"}");
+            }
+        }
+    }
+
+    public void register(Context context) {
+        RegisterRequest request= gson.fromJson(context.body(),RegisterRequest.class);
+        try {
+            RegisterResult result = sessionService.register(request);
+            context.json(result);
+        }catch (Exception e){
+            if(e.getMessage().equals("bad request")){
+                context.status(400);
+                context.json("{\"message\":\"Error: bad request\"}");
+            }
+            else if(e.getMessage().equals("already taken")){
+                context.status(403);
                 context.json("{\"message\":\"Error: unauthorized\"}");
             }
             else{
