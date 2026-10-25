@@ -13,12 +13,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ServerFacadeTests {
 
     private static Server server;
-    private static ServerFacade facade=new ServerFacade();
+    private static ServerFacade facade=new ServerFacade(8080);
 
     @BeforeAll
     public static void init() {
         server = new Server();
-        var port = server.run(0);
+        var port = server.run(8080);
         System.out.println("Started test HTTP server on " + port);
     }
 
@@ -29,7 +29,7 @@ public class ServerFacadeTests {
 
     @BeforeEach
     public void clearfacade()throws Exception{
-        facade=new ServerFacade();
+        facade=new ServerFacade(8080);
         facade.clearDb();
     }
 
@@ -48,7 +48,7 @@ public class ServerFacadeTests {
     @Test
     public void registerBadTest()throws Exception{
         facade.register("dyl","pass","email");
-        ServerFacade secondPerson=new ServerFacade();
+        ServerFacade secondPerson=new ServerFacade(8080);
         assertThrows(Exception.class,() -> secondPerson.register("dyl","pass","email"));
         assertFalse(secondPerson.authenticated());
     }
@@ -101,7 +101,7 @@ public class ServerFacadeTests {
         facade.register("dyl","pass","email");
         facade.createGame("coolgame");
         facade.joinGame(1,"WHITE");
-        ServerFacade secondPerson=new ServerFacade();
+        ServerFacade secondPerson=new ServerFacade(8080);
         secondPerson.register("bill","ps","email2");
         secondPerson.joinGame(1,"WHITE");
         GameData game =facade.listGames().get(1);

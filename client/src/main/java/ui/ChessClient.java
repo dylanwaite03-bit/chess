@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class ChessClient {
 
     private final Scanner scanner=new Scanner(System.in);
-    private final ServerFacade server=new ServerFacade();
+    private final ServerFacade server=new ServerFacade(8080);
     private final Map<Integer,Integer> gameChoices=new HashMap<>();
     private final GamePlayScreen gamePlayScreen=new GamePlayScreen();
 

@@ -15,12 +15,15 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ServerFacade {
-    private final String serverUrl ="http://localhost:8080";
+    private final String serverUrl;
     private final HttpClient client= HttpClient.newHttpClient();
     private final Gson gson=new Gson();
     private String authToken=null;
     private String username=null;
 
+    public ServerFacade(int port){
+        this.serverUrl="http://localhost:"+port;
+    }
 
     public boolean authenticated(){
         return authToken!=null && !authToken.isEmpty();
