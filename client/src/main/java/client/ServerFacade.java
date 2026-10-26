@@ -37,10 +37,8 @@ public class ServerFacade {
                 POST(HttpRequest.BodyPublishers.ofString(json)).build();
 
         HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.statusCode());
-        System.out.println(response.body());
         if (response.statusCode()!=200){
-            throw new Exception("register failed");
+            throw new Exception("register failed, username may be taken");
         }
         JsonObject jsonLoad=gson.fromJson(response.body(),JsonObject.class);
         this.authToken=jsonLoad.get("authToken").getAsString();
@@ -57,7 +55,7 @@ public class ServerFacade {
 
         HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
         if (response.statusCode()!=200){
-            throw new Exception("login failed");
+            throw new Exception("login failed, incorrect username or password");
         }
         JsonObject jsonLoad=gson.fromJson(response.body(),JsonObject.class);
         this.authToken=jsonLoad.get("authToken").getAsString();

@@ -37,6 +37,9 @@ public class ChessClient {
                 else if (choice.equals("quit")){
                     break;
                 }
+                else{
+                    System.out.println("invalid response");
+                }
             }
         }
     }
@@ -49,8 +52,7 @@ public class ChessClient {
         System.out.print("email");
         String email=scanner.nextLine();
         try{
-            String response=server.register(username,password,email);
-            System.out.println(response);
+            server.register(username,password,email);
         }catch(Exception e){
             System.out.println("register failed" + e.getMessage());
         }
@@ -62,8 +64,7 @@ public class ChessClient {
         System.out.print("password");
         String password=scanner.nextLine();
         try{
-            String response=server.login(username,password);
-            System.out.println(response);
+            server.login(username,password);
         }catch(Exception e){
             System.out.println("login failed" + e.getMessage());
         }
