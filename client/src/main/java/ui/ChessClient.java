@@ -104,7 +104,7 @@ public class ChessClient {
             String response=server.logout();
             System.out.println(response);
         }catch(Exception e){
-            System.out.println("logout failed" + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -115,7 +115,7 @@ public class ChessClient {
             String response=server.createGame(gameName);
             System.out.println(response);
         }catch(Exception e){
-            System.out.println("create game failed" + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
     private void listGames(){
@@ -129,7 +129,7 @@ public class ChessClient {
                 i++;
             }
         }catch(Exception e){
-            System.out.println("list game failed" + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -150,7 +150,7 @@ public class ChessClient {
             System.out.println(response);
 
         }catch(Exception e){
-            System.out.println("join game failed" + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -161,7 +161,7 @@ public class ChessClient {
         try{
             gamePlayScreen.whitePerspective();
         }catch(Exception e){
-            System.out.println("join game failed" + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
