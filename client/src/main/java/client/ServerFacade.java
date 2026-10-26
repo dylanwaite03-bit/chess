@@ -72,6 +72,9 @@ public class ServerFacade {
                 DELETE().build();
 
         HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode()!=200){
+            throw new Exception("logout failed");
+        }
         this.authToken=null;
         this.username=null;
         return response.body();
@@ -87,6 +90,9 @@ public class ServerFacade {
                 header("Authorization",authToken).
                 POST(HttpRequest.BodyPublishers.ofString(json)).build();
         HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode()!=200){
+            throw new Exception("Could not create game");
+        }
         return response.body();
     }
 
@@ -97,6 +103,9 @@ public class ServerFacade {
                 header("Authorization",authToken).
                 GET().build();
         HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode()!=200){
+            throw new Exception("List games failed");
+        }
         JsonObject json= gson.fromJson(response.body(),JsonObject.class);
         JsonArray games=json.getAsJsonArray("games");
         Map<Integer,GameData> gameMap=new LinkedHashMap<>();
@@ -119,6 +128,9 @@ public class ServerFacade {
                 header("Authorization",authToken).
                 PUT(HttpRequest.BodyPublishers.ofString(json)).build();
         HttpResponse<String> response=client.send(request,HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode()!=200){
+            throw new Exception("Could not join game");
+        }
         return response.body();
     }
 

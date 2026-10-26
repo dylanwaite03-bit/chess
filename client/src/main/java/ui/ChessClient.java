@@ -54,7 +54,7 @@ public class ChessClient {
         try{
             server.register(username,password,email);
         }catch(Exception e){
-            System.out.println("register failed" + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -66,7 +66,7 @@ public class ChessClient {
         try{
             server.login(username,password);
         }catch(Exception e){
-            System.out.println("login failed" + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
