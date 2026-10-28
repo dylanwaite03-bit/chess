@@ -112,8 +112,7 @@ public class ChessClient {
         System.out.print("game name");
         String gameName=scanner.nextLine();
         try{
-            String response=server.createGame(gameName);
-            System.out.println(response);
+            server.createGame(gameName);
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
@@ -125,6 +124,8 @@ public class ChessClient {
             for (Map.Entry<Integer, GameData> item:response.entrySet()){
                 GameData game=item.getValue();
                 System.out.println((i)+"."+game.gameName());
+                System.out.println("white player"+"."+game.whiteUsername());
+                System.out.println("black player"+"."+game.blackUsername());
                 gameChoices.put(i,item.getKey());
                 i++;
             }
@@ -140,15 +141,18 @@ public class ChessClient {
         System.out.print("WHITE or BLACK?");
         String color=scanner.nextLine().toUpperCase();
         try{
-            if (color.equals("WHITE")){
-                gamePlayScreen.whitePerspective();
-            } else if (color.equals("BLACK")) {
-                gamePlayScreen.blackPerspective();
+            Integer gameid=gameChoices.get(Integer.parseInt(gameNumber));
+            if (gameid !=null) {
+                server.joinGame(gameid, color);
+                if (color.equals("WHITE")) {
+                    gamePlayScreen.whitePerspective();
+                } else if (color.equals("BLACK")) {
+                    gamePlayScreen.blackPerspective();
+                }
             }
-            int gameid=gameChoices.get(Integer.parseInt(gameNumber));
-            String response=server.joinGame(gameid,color);
-            System.out.println(response);
-
+            else{
+                System.out.print("Game doesn't exist");
+            }
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
@@ -159,7 +163,13 @@ public class ChessClient {
         System.out.print("enter game number to observe");
         String gameNumber=scanner.nextLine();
         try{
-            gamePlayScreen.whitePerspective();
+            Integer gameid=gameChoices.get(Integer.parseInt(gameNumber));
+            if (gameid !=null) {
+                gamePlayScreen.whitePerspective();
+            }
+            else{
+                System.out.print("game doesn't exist");
+            }
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
