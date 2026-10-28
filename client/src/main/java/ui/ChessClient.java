@@ -138,6 +138,12 @@ public class ChessClient {
         listGames();
         System.out.print("enter game number");
         String gameNumber=scanner.nextLine();
+        try{
+            int gamenum=Integer.parseInt(gameNumber);
+        }catch(NumberFormatException e){
+            System.out.println("needs to be number");
+            return;
+        }
         System.out.print("WHITE or BLACK?");
         String color=scanner.nextLine().toUpperCase();
         try{
