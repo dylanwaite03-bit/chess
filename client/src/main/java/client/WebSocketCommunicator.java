@@ -1,4 +1,20 @@
 package client;
 
-public class WebSocketCommunicator {
+import jakarta.websocket.*;
+
+import java.net.URI;
+
+public class WebSocketCommunicator extends Endpoint {
+    public Session session;
+
+    public WebSocketCommunicator throws Exception{
+        URI uri = new URI();
+        WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+        this.session=container.connectToServer(this,uri);
+    }
+
+    @Override
+    public void onOpen(Session session, EndpointConfig endpointConfig){
+        System.out.println("connected");
+    }
 }
