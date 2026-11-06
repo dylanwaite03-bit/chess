@@ -8,6 +8,7 @@ import service.*;
 
 import io.javalin.http.Context;
 import websocket.commands.UserGameCommand;
+import websocket.messages.ServerMessage;
 
 import java.util.List;
 import java.util.Map;
@@ -56,9 +57,12 @@ public class GameHandler {
     public void exceptionhandler(Context context, Exception e){
         String error =e.getMessage();
         int statusCode=500;
-        if ("bad request".equals(error)) {statusCode=400;}
-        if ("unauthorized".equals(error)) {statusCode=401;}
-        if ("already taken".equals(error)){ statusCode=403;}
+        if ("bad request".equals(error))
+            {statusCode=400;}
+        if ("unauthorized".equals(error))
+            {statusCode=401;}
+        if ("already taken".equals(error))
+            { statusCode=403;}
         context.status(statusCode);
         context.json(Map.of("message","Error"+error));
     }
@@ -67,6 +71,16 @@ public class GameHandler {
         String message=context.message();
         UserGameCommand userGameCommand=gson.fromJson(message,UserGameCommand.class);
         System.out.println(context.message());
+        if (userGameCommand.getCommandType()== UserGameCommand.CommandType.CONNECT){
+            try {
+                GameData game = gameService.getGame(userGameCommand.getAuthToken(), userGameCommand.getGameID());
+                ServerMessage response=new ServerMessage(ServerMessage.ServerMessageType.LOAD_GAME, game);
+                context.send(gson.toJson(response));
+            }catch (Exception e){
+                context.send(gson.toJson(e));
+            }
+        }
+
     }
 
 

@@ -49,7 +49,7 @@ public class GameService {
             throw new Exception("bad request");
         }
 
-        if ("WHITE".equals(color)) {
+        if ("WHITE".equals(color)){
             if (game.whiteUsername() != null) {
                 throw new Exception("already taken");
             }
@@ -77,6 +77,19 @@ public class GameService {
         }
 
         return gameDAO.listGames();
+    }
+
+    public GameData getGame(String authToken, int gameId)throws Exception{
+        AuthData authData=authDAO.getAuth(authToken);
+
+        if (authData==null){
+            throw new Exception("unauthorized");
+        }
+        GameData game=gameDAO.getGame(gameId);
+        if (game==null){
+            throw new Exception("no game");
+        }
+        return game;
     }
 
 
