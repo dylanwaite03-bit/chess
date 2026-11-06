@@ -2,6 +2,7 @@ package server;
 
 
 import com.google.gson.Gson;
+import io.javalin.websocket.WsContext;
 import io.javalin.websocket.WsMessageContext;
 import model.GameData;
 import service.*;
@@ -10,12 +11,12 @@ import io.javalin.http.Context;
 import websocket.commands.UserGameCommand;
 import websocket.messages.ServerMessage;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GameHandler {
     private final GameService gameService;
     private final Gson gson =new Gson();
+    private Map<Integer, Set<WsContext>> connections=new HashMap<>();
 
     public GameHandler(GameService gameService){
         this.gameService=gameService;
@@ -74,8 +75,18 @@ public class GameHandler {
         if (userGameCommand.getCommandType()== UserGameCommand.CommandType.CONNECT){
             try {
                 GameData game = gameService.getGame(userGameCommand.getAuthToken(), userGameCommand.getGameID());
-                ServerMessage response=new ServerMessage(ServerMessage.ServerMessageType.LOAD_GAME, game);
+                Set<WsContext> gameConnections=connections.get(userGameCommand.getGameID());
+                if (gameConnections==null){
+                    gameConnections=new HashSet<>();
+                    connections.put(userGameCommand.getGameID(), gameConnections);
+                }
+                ServerMessage response=new ServerMessage(ServerMessage.ServerMessageType.LOAD_GAME, game,null);
                 context.send(gson.toJson(response));
+                ServerMessage notification=new ServerMessage(ServerMessage.ServerMessageType.NOTIFICATION,null,"player joined");
+                for(WsContext connection:gameConnections){
+                    connection.send(gson.toJson(notification));
+                }
+                gameConnections.add(context);
             }catch (Exception e){
                 context.send(gson.toJson(e));
             }
