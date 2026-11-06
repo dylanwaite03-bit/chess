@@ -52,7 +52,7 @@ public class Server {
         javalin.ws("ws", ws->{
             ws.onConnect(context->System.out.println("connected"));
             ws.onClose(context->System.out.println("closed"));
-            ws.onMessage(context->System.out.println("message"));
+            ws.onMessage(gameHandler::messageHandler);
         });
     }
 

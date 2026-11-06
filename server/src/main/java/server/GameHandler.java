@@ -2,10 +2,12 @@ package server;
 
 
 import com.google.gson.Gson;
+import io.javalin.websocket.WsMessageContext;
 import model.GameData;
 import service.*;
 
 import io.javalin.http.Context;
+import websocket.commands.UserGameCommand;
 
 import java.util.List;
 import java.util.Map;
@@ -59,6 +61,12 @@ public class GameHandler {
         if ("already taken".equals(error)){ statusCode=403;}
         context.status(statusCode);
         context.json(Map.of("message","Error"+error));
+    }
+
+    public void messageHandler(WsMessageContext context){
+        String message=context.message();
+        UserGameCommand userGameCommand=gson.fromJson(message,UserGameCommand.class);
+        System.out.println(context.message());
     }
 
 
