@@ -7,8 +7,8 @@ import java.net.URI;
 public class WebSocketCommunicator extends Endpoint {
     public Session session;
 
-    public WebSocketCommunicator throws Exception{
-        URI uri = new URI();
+    public WebSocketCommunicator() throws Exception{
+        URI uri = new URI("ws://localhost:8080/ws");
         WebSocketContainer container = ContainerProvider.getWebSocketContainer();
         this.session=container.connectToServer(this,uri);
     }

@@ -49,6 +49,11 @@ public class Server {
         javalin.get("/game",gameHandler::listGames);
         javalin.delete("/session",sessionHandler::logout);
         javalin.delete("/db",sessionHandler::clear);
+        javalin.ws("ws", ws->{
+            ws.onConnect(context->System.out.println("connected"));
+            ws.onClose(context->System.out.println("closed"));
+            ws.onMessage(context->System.out.println("message"));
+        });
     }
 
     public int run(int desiredPort) {
