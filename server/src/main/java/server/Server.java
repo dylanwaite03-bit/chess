@@ -51,7 +51,7 @@ public class Server {
         javalin.delete("/db",sessionHandler::clear);
         javalin.ws("ws", ws->{
             ws.onConnect(context->System.out.println("connected"));
-            ws.onClose(context->System.out.println("closed"));
+            ws.onClose(gameHandler::removeConnection);
             ws.onMessage(gameHandler::messageHandler);
         });
     }

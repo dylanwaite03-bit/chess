@@ -122,6 +122,12 @@ public class GameHandler {
 
     }
 
+    public void removeConnection(WsContext context){
+        for(Map<WsContext,String> connection:connections.values()){
+            connection.remove(context);
+        }
+    }
+
 
     
 }
