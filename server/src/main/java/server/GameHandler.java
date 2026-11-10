@@ -80,20 +80,19 @@ public class GameHandler {
                     gameConnections=new HashSet<>();
                     connections.put(userGameCommand.getGameID(), gameConnections);
                 }
-                ServerMessage response=new ServerMessage(ServerMessage.ServerMessageType.LOAD_GAME, game,null);
+                ServerMessage response=new ServerMessage(ServerMessage.ServerMessageType.LOAD_GAME, game,null,null);
                 context.send(gson.toJson(response));
-                ServerMessage notification=new ServerMessage(ServerMessage.ServerMessageType.NOTIFICATION,null,"player joined");
+                ServerMessage notification=new ServerMessage(ServerMessage.ServerMessageType.NOTIFICATION,null,"player joined",null);
                 for(WsContext connection:gameConnections){
                     connection.send(gson.toJson(notification));
                 }
                 gameConnections.add(context);
             }catch (Exception e){
-                context.send(gson.toJson(e));
+                ServerMessage Message=new ServerMessage(ServerMessage.ServerMessageType.ERROR,null,null,"error connecting");
+                context.send(gson.toJson(Message));
             }
         }
 
     }
-
-
-
+    
 }
