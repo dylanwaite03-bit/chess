@@ -12,12 +12,13 @@ import io.javalin.http.Context;
 import websocket.commands.UserGameCommand;
 import websocket.messages.ServerMessage;
 
+import java.sql.Connection;
 import java.util.*;
 
 public class GameHandler {
     private final GameService gameService;
     private final Gson gson =new Gson();
-    private Map<Integer, Set<WsContext>> connections=new HashMap<>();
+    private Map<Integer,Map<WsContext,String>> connections=new HashMap<>();
 
     public GameHandler(GameService gameService){
         this.gameService=gameService;
@@ -76,18 +77,19 @@ public class GameHandler {
         if (userGameCommand.getCommandType()== UserGameCommand.CommandType.CONNECT){
             try {
                 GameData game = gameService.getGame(userGameCommand.getAuthToken(), userGameCommand.getGameID());
-                Set<WsContext> gameConnections=connections.get(userGameCommand.getGameID());
+                String username=gameService.getUsername(userGameCommand.getAuthToken());
+                Map<WsContext, String> gameConnections=connections.get(userGameCommand.getGameID());
                 if (gameConnections==null){
-                    gameConnections=new HashSet<>();
+                    gameConnections=new HashMap<>();
                     connections.put(userGameCommand.getGameID(), gameConnections);
                 }
                 ServerMessage response=new ServerMessage(ServerMessage.ServerMessageType.LOAD_GAME, game,null,null);
                 context.send(gson.toJson(response));
                 ServerMessage notification=new ServerMessage(ServerMessage.ServerMessageType.NOTIFICATION,null,"player joined",null);
-                for(WsContext connection:gameConnections){
+                for(WsContext connection:gameConnections.keySet()){
                     connection.send(gson.toJson(notification));
                 }
-                gameConnections.add(context);
+                gameConnections.put(context,username);
             }catch (Exception e){
                 ServerMessage Message=new ServerMessage(ServerMessage.ServerMessageType.ERROR,null,null,"error connecting");
                 context.send(gson.toJson(Message));
@@ -98,13 +100,20 @@ public class GameHandler {
                 GameData game = gameService.makeMove(userGameCommand.getAuthToken(), userGameCommand.getGameID(),
                         userGameCommand.getMove());
                 ServerMessage response=new ServerMessage(ServerMessage.ServerMessageType.LOAD_GAME,game,null,null);
-                Set<WsContext> gameConnections=connections.get(userGameCommand.getGameID());
-                for(WsContext connection:gameConnections){
+                ServerMessage notification=new ServerMessage(ServerMessage.ServerMessageType.NOTIFICATION,null,"player made move",null);
+                Map<WsContext,String> gameConnections=connections.get(userGameCommand.getGameID());
+                String moverUsername= gameService.getUsername(userGameCommand.getAuthToken());
+                for(Map.Entry<WsContext,String>entry:gameConnections.entrySet()){
+                    WsContext connection=entry.getKey();
+                    String username=entry.getValue();
                     connection.send(gson.toJson(response));
+                    if (!username.equals(moverUsername)){
+                        connection.send(gson.toJson(notification));
+                    }
                 }
 
             }catch(Exception e){
-                e.printStackTrace();
+
                 ServerMessage Message=new ServerMessage(ServerMessage.ServerMessageType.ERROR,null,null,"error making move");
                 context.send(gson.toJson(Message));
             }

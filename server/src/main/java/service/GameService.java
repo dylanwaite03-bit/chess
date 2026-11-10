@@ -106,5 +106,13 @@ public class GameService {
         return game;
     }
 
+    public String getUsername(String authToken) throws Exception{
+        AuthData authData=authDAO.getAuth(authToken);
+
+        if (authData==null){
+            throw new Exception("unauthorized");
+        }
+        return authData.username();
+    }
 
 }
