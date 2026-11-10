@@ -1,6 +1,7 @@
 package server;
 
 
+import chess.ChessGame;
 import com.google.gson.Gson;
 import io.javalin.websocket.WsContext;
 import io.javalin.websocket.WsMessageContext;
@@ -92,7 +93,26 @@ public class GameHandler {
                 context.send(gson.toJson(Message));
             }
         }
+        if (userGameCommand.getCommandType()== UserGameCommand.CommandType.MAKE_MOVE) {
+            try{
+                GameData game = gameService.makeMove(userGameCommand.getAuthToken(), userGameCommand.getGameID(),
+                        userGameCommand.getMove());
+                ServerMessage response=new ServerMessage(ServerMessage.ServerMessageType.LOAD_GAME,game,null,null);
+                Set<WsContext> gameConnections=connections.get(userGameCommand.getGameID());
+                for(WsContext connection:gameConnections){
+                    connection.send(gson.toJson(response));
+                }
+
+            }catch(Exception e){
+                e.printStackTrace();
+                ServerMessage Message=new ServerMessage(ServerMessage.ServerMessageType.ERROR,null,null,"error making move");
+                context.send(gson.toJson(Message));
+            }
+        }
+
 
     }
+
+
     
 }

@@ -1,5 +1,7 @@
 package service;
 
+import chess.ChessGame;
+import chess.ChessMove;
 import dataaccess.AuthDAO;
 import dataaccess.GameDAO;
 import model.AuthData;
@@ -25,7 +27,7 @@ public class GameService {
             throw new Exception("unauthorized");
         }
 
-        GameData game=new GameData(0,null,null, request.gameName(),null);
+        GameData game=new GameData(0,null,null, request.gameName(),new ChessGame());
         int gameId=gameDAO.createGame(game);
 
         return new CreateGameResult(gameId);
@@ -92,6 +94,17 @@ public class GameService {
         return game;
     }
 
+    public GameData makeMove(String authToken, int gameId, ChessMove move)throws Exception{
+        GameData game=getGame(authToken,gameId);
+        AuthData auth=authDAO.getAuth(authToken);
+        ChessGame chessGame=game.game();
+        if (!auth.username().equals(game.whiteUsername()) && !auth.username().equals(game.blackUsername())){
+            throw new Exception("Error");
+        }
+        chessGame.makeMove(move);
+        gameDAO.updateGame(game);
+        return game;
+    }
 
 
 }

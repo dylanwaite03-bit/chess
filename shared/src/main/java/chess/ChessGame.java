@@ -123,7 +123,6 @@ public class ChessGame {
                                   Collection<ChessMove> validmoves) {
 
         int row = startPosition.getRow();
-
         if (isInCheck(piece.getTeamColor())) {
             return;
         }
@@ -133,7 +132,6 @@ public class ChessGame {
             board.addPiece(new ChessPosition(row, 6), piece);
 
             boolean check = isInCheck(piece.getTeamColor());
-
             board.removePiece(new ChessPosition(row, 6));
             board.addPiece(new ChessPosition(row, 7), piece);
 
@@ -151,7 +149,6 @@ public class ChessGame {
         if (canCastleLeft(row, piece)) {
             board.removePiece(startPosition);
             board.addPiece(new ChessPosition(row, 4), piece);
-
             boolean check = isInCheck(piece.getTeamColor());
 
             board.removePiece(new ChessPosition(row, 4));
@@ -173,17 +170,15 @@ public class ChessGame {
         if (board.getPiece(new ChessPosition(row, 6)) != null ||
                 board.getPiece(new ChessPosition(row, 7)) != null) {
             return false;
-        }
 
+        }
         ChessPiece rook = board.getPiece(new ChessPosition(row, 8));
 
         return rook != null &&
                 rook.getPieceType() == ChessPiece.PieceType.ROOK &&
                 rook.getTeamColor() == piece.getTeamColor() &&
-                ((piece.getTeamColor() == TeamColor.WHITE &&
-                        !whiteKingMoved && !whiteRightRookMoved) ||
-                        (piece.getTeamColor() == TeamColor.BLACK &&
-                                !blackKingMoved && !blackRightRookMoved));
+                ((piece.getTeamColor() == TeamColor.WHITE && !whiteKingMoved && !whiteRightRookMoved) ||
+                        (piece.getTeamColor() == TeamColor.BLACK && !blackKingMoved && !blackRightRookMoved));
     }
 
     private boolean canCastleLeft(int row, ChessPiece piece) {
@@ -199,9 +194,8 @@ public class ChessGame {
                 rook.getPieceType() == ChessPiece.PieceType.ROOK &&
                 rook.getTeamColor() == piece.getTeamColor() &&
                 ((piece.getTeamColor() == TeamColor.WHITE &&
-                        !whiteKingMoved && !whiteLeftRookMoved) ||
-                        (piece.getTeamColor() == TeamColor.BLACK &&
-                                !blackKingMoved && !blackLeftRookMoved));
+                        !whiteKingMoved && !whiteLeftRookMoved) || (piece.getTeamColor() == TeamColor.BLACK &&
+                        !blackKingMoved && !blackLeftRookMoved));
     }
 
     /**
