@@ -140,4 +140,19 @@ public class GameService {
 
     }
 
+    public void leaveGame(String authToken, int gameId) throws Exception{
+        GameData game=getGame(authToken,gameId);
+        String username=getUsername(authToken);
+        if(username.equals(game.whiteUsername())){
+            GameData updated=new GameData(gameId,null,
+                    game.blackUsername(), game.gameName(), game.game());
+            gameDAO.updateGame(updated);
+        }
+        if(username.equals(game.blackUsername())){
+            GameData updated=new GameData(gameId, game.whiteUsername(),
+                    null, game.gameName(), game.game());
+            gameDAO.updateGame(updated);
+        }
+    }
+
 }

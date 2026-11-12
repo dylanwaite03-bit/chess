@@ -139,15 +139,18 @@ public class GameHandler {
                 context.send(gson.toJson(Message));
             }
         }
-        if (userGameCommand.getCommandType()== UserGameCommand.CommandType.RESIGN) {
+        if (userGameCommand.getCommandType()== UserGameCommand.CommandType.LEAVE) {
             try{
-                String username=gameService.getUsername(userGameCommand.getAuthToken());
+                String username= gameService.getUsername(userGameCommand.getAuthToken());
                 Map<WsContext,String> gameConnections=connections.get(userGameCommand.getGameID());
                 ServerMessage notification=new ServerMessage(ServerMessage.ServerMessageType.NOTIFICATION,null,"player left",null);
                 for(Map.Entry<WsContext,String>entry:gameConnections.entrySet()){
-                    entry.getKey().send(gson.toJson(notification));
+                    if (!username.equals(entry.getValue())){
+                        entry.getKey().send(gson.toJson(notification));
+                    }
                 }
                 gameConnections.remove(context);
+                gameService.leaveGame(userGameCommand.getAuthToken(), userGameCommand.getGameID());
 
             } catch (Exception e) {
                 ServerMessage Message=new ServerMessage(ServerMessage.ServerMessageType.ERROR,null,null,"error leaving");
