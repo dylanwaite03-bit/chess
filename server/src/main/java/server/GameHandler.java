@@ -119,7 +119,19 @@ public class GameHandler {
             }
         }
         if (userGameCommand.getCommandType()== UserGameCommand.CommandType.RESIGN) {
+            try{
+                String usernameResigner=gameService.getUsername(userGameCommand.getAuthToken());
+                gameService.resign(userGameCommand.getAuthToken(),userGameCommand.getGameID());
+                Map<WsContext,String> gameConnections=connections.get(userGameCommand.getGameID());
+                ServerMessage notification=new ServerMessage(ServerMessage.ServerMessageType.NOTIFICATION,null,"player resigned",null);
+                for(Map.Entry<WsContext,String>entry:gameConnections.entrySet()){
+                    entry.getKey().send(gson.toJson(notification));
+                }
 
+            } catch (Exception e) {
+                ServerMessage Message=new ServerMessage(ServerMessage.ServerMessageType.ERROR,null,null,"error resigning");
+                context.send(gson.toJson(Message));
+            }
         }
 
 
