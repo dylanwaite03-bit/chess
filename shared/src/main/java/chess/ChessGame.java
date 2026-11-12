@@ -21,11 +21,20 @@ public class ChessGame {
     private boolean blackLeftRookMoved = false;
     private boolean blackRightRookMoved = false;
     private ChessMove lastmove =null;
+    private boolean gameOver=false;
 
     public ChessGame() {
         this.board=new ChessBoard();
         board.resetBoard();
         this.teamTurn=TeamColor.WHITE;
+    }
+
+    public boolean isGameOver(){
+        return gameOver;
+    }
+
+    public void setGameOver(boolean gameOver){
+        this.gameOver=gameOver;
     }
 
     /**
@@ -297,6 +306,7 @@ public class ChessGame {
         }
         else {
             teamTurn = TeamColor.WHITE;
+
         }
         lastmove=move;
 
@@ -324,6 +334,7 @@ public class ChessGame {
                 if (piece.getTeamColor()!=teamColor){
                     Collection<ChessMove> piecemoves=piece.pieceMoves(board,position);
                     moves.addAll(piecemoves);
+
                 }
                 else if(piece.getPieceType()== ChessPiece.PieceType.KING && piece.getTeamColor()==teamColor){
                     kingposition=position;

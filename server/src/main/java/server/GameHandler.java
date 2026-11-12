@@ -118,16 +118,20 @@ public class GameHandler {
                 context.send(gson.toJson(Message));
             }
         }
+        if (userGameCommand.getCommandType()== UserGameCommand.CommandType.RESIGN) {
+
+        }
 
 
     }
+
+
 
     public void removeConnection(WsContext context){
         for(Map<WsContext,String> connection:connections.values()){
             connection.remove(context);
         }
     }
-
 
     
 }

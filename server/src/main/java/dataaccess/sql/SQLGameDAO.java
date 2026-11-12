@@ -71,6 +71,7 @@ public class SQLGameDAO implements GameDAO {
             }
         }catch(SQLException ex){
             throw new DataAccessException("error reading",ex);
+
         }
     }
 

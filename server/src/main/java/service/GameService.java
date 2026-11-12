@@ -115,4 +115,18 @@ public class GameService {
         return authData.username();
     }
 
+    public void resign(String authToken, int gameId) throws Exception{
+        GameData game=getGame(authToken,gameId);
+        String username=getUsername(authToken);
+        if(!username.equals(game.whiteUsername()) && !username.equals(game.blackUsername())){
+            throw new Exception("unauthorized");
+        }
+        if(game.game().isGameOver()){
+            throw new Exception("game already over");
+        }
+        game.game().setGameOver(true);
+        gameDAO.updateGame(game);
+
+    }
+
 }
