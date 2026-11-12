@@ -103,12 +103,18 @@ public class GameHandler {
                 ServerMessage notification=new ServerMessage(ServerMessage.ServerMessageType.NOTIFICATION,null,"player made move",null);
                 Map<WsContext,String> gameConnections=connections.get(userGameCommand.getGameID());
                 String moverUsername= gameService.getUsername(userGameCommand.getAuthToken());
+                boolean checkmate=game.game().isInCheckmate(game.game().getTeamTurn());
                 for(Map.Entry<WsContext,String>entry:gameConnections.entrySet()){
                     WsContext connection=entry.getKey();
                     String username=entry.getValue();
                     connection.send(gson.toJson(response));
                     if (!username.equals(moverUsername)){
                         connection.send(gson.toJson(notification));
+                    }
+                    if(checkmate){
+                        ServerMessage checkmateresponse=new ServerMessage(ServerMessage.ServerMessageType.NOTIFICATION,null,
+                                "checkmate",null);
+                        connection.send(gson.toJson(checkmateresponse));
                     }
                 }
 

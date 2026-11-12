@@ -98,9 +98,20 @@ public class GameService {
         GameData game=getGame(authToken,gameId);
         AuthData auth=authDAO.getAuth(authToken);
         ChessGame chessGame=game.game();
+        String username=getUsername(authToken);
         if (!auth.username().equals(game.whiteUsername()) && !auth.username().equals(game.blackUsername())){
             throw new Exception("Error");
         }
+        if(game.game().isGameOver()){
+            throw new Exception("game already over");
+        }
+        if (game.game().getTeamTurn() != ChessGame.TeamColor.WHITE && username.equals(game.whiteUsername())){
+            throw new Exception("not your turn");
+        }
+        if (game.game().getTeamTurn() != ChessGame.TeamColor.BLACK && username.equals(game.blackUsername())){
+            throw new Exception("not your turn");
+        }
+
         chessGame.makeMove(move);
         gameDAO.updateGame(game);
         return game;
