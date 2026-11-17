@@ -91,8 +91,8 @@ public class GameHandler {
                 }
                 gameConnections.put(context,username);
             }catch (Exception e){
-                ServerMessage Message=new ServerMessage(ServerMessage.ServerMessageType.ERROR,null,null,"error connecting");
-                context.send(gson.toJson(Message));
+                ServerMessage error=new ServerMessage(ServerMessage.ServerMessageType.ERROR,null,null,"error connecting");
+                context.send(gson.toJson(error));
             }
         }
         if (userGameCommand.getCommandType()== UserGameCommand.CommandType.MAKE_MOVE) {
@@ -120,8 +120,8 @@ public class GameHandler {
 
             }catch(Exception e){
 
-                ServerMessage Message=new ServerMessage(ServerMessage.ServerMessageType.ERROR,null,null,"error making move");
-                context.send(gson.toJson(Message));
+                ServerMessage error=new ServerMessage(ServerMessage.ServerMessageType.ERROR,null,null,"error making move");
+                context.send(gson.toJson(error));
             }
         }
         if (userGameCommand.getCommandType()== UserGameCommand.CommandType.RESIGN) {
@@ -135,8 +135,8 @@ public class GameHandler {
                 }
 
             } catch (Exception e) {
-                ServerMessage Message=new ServerMessage(ServerMessage.ServerMessageType.ERROR,null,null,"error resigning");
-                context.send(gson.toJson(Message));
+                ServerMessage error=new ServerMessage(ServerMessage.ServerMessageType.ERROR,null,null,"error resigning");
+                context.send(gson.toJson(error));
             }
         }
         if (userGameCommand.getCommandType()== UserGameCommand.CommandType.LEAVE) {
@@ -153,8 +153,8 @@ public class GameHandler {
                 gameService.leaveGame(userGameCommand.getAuthToken(), userGameCommand.getGameID());
 
             } catch (Exception e) {
-                ServerMessage Message=new ServerMessage(ServerMessage.ServerMessageType.ERROR,null,null,"error leaving");
-                context.send(gson.toJson(Message));
+                ServerMessage error=new ServerMessage(ServerMessage.ServerMessageType.ERROR,null,null,"error leaving");
+                context.send(gson.toJson(error));
             }
         }
 

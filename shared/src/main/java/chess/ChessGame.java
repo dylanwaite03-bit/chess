@@ -172,7 +172,9 @@ public class ChessGame {
                 validmoves.add(new ChessMove(startPosition,
                         new ChessPosition(row, 3), null));
             }
+
         }
+
     }
 
     private boolean canCastleRight(int row, ChessPiece piece) {
@@ -183,11 +185,17 @@ public class ChessGame {
         }
         ChessPiece rook = board.getPiece(new ChessPosition(row, 8));
 
-        return rook != null &&
-                rook.getPieceType() == ChessPiece.PieceType.ROOK &&
-                rook.getTeamColor() == piece.getTeamColor() &&
-                ((piece.getTeamColor() == TeamColor.WHITE && !whiteKingMoved && !whiteRightRookMoved) ||
-                        (piece.getTeamColor() == TeamColor.BLACK && !blackKingMoved && !blackRightRookMoved));
+        if (rook==null ||rook.getPieceType()!= ChessPiece.PieceType.ROOK){
+            return false;
+        }
+
+        if(rook.getTeamColor()!=piece.getTeamColor()){
+            return false;
+        }
+        if(piece.getTeamColor()==TeamColor.WHITE){
+            return !whiteKingMoved && !whiteRightRookMoved;
+        }
+        return !blackKingMoved && !blackRightRookMoved;
     }
 
     private boolean canCastleLeft(int row, ChessPiece piece) {
@@ -199,12 +207,17 @@ public class ChessGame {
 
         ChessPiece rook = board.getPiece(new ChessPosition(row, 1));
 
-        return rook != null &&
-                rook.getPieceType() == ChessPiece.PieceType.ROOK &&
-                rook.getTeamColor() == piece.getTeamColor() &&
-                ((piece.getTeamColor() == TeamColor.WHITE &&
-                        !whiteKingMoved && !whiteLeftRookMoved) || (piece.getTeamColor() == TeamColor.BLACK &&
-                        !blackKingMoved && !blackLeftRookMoved));
+        if (rook==null ||rook.getPieceType()!= ChessPiece.PieceType.ROOK){
+            return false;
+        }
+
+        if(rook.getTeamColor()!=piece.getTeamColor()){
+            return false;
+        }
+        if(piece.getTeamColor()==TeamColor.WHITE){
+            return !whiteKingMoved && !whiteLeftRookMoved;
+        }
+        return !blackKingMoved && !blackLeftRookMoved;
     }
 
     /**
@@ -250,7 +263,7 @@ public class ChessGame {
                     whiteRightRookMoved = true;
                 }
             }
-            else {
+            if (piece.getTeamColor() == TeamColor.BLACK) {
                 if (startposition.getColumn() == 1) {
                     blackLeftRookMoved = true;
                 }
@@ -394,6 +407,7 @@ public class ChessGame {
                     }
                 }
             }
+
         }
 
         return false;
