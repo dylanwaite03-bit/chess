@@ -15,6 +15,15 @@ public class WebSocketCommunicator extends Endpoint {
 
     @Override
     public void onOpen(Session session, EndpointConfig endpointConfig){
+
         System.out.println("connected");
+        this.session=session;
+
+    }
+
+    public void close()throws Exception{
+        if(session !=null && session.isOpen()){
+            session.close();
+        }
     }
 }
