@@ -1,6 +1,7 @@
 package ui;
 
 import client.ServerFacade;
+import client.WebSocketCommunicator;
 import model.GameData;
 
 import java.util.HashMap;
@@ -13,6 +14,7 @@ public class ChessClient {
     private final ServerFacade server=new ServerFacade(8080);
     private final Map<Integer,Integer> gameChoices=new HashMap<>();
     private final GamePlayScreen gamePlayScreen=new GamePlayScreen();
+    private WebSocketCommunicator webSocket;
 
     public void main(){
         while (true) {
@@ -150,11 +152,13 @@ public class ChessClient {
             Integer gameid=gameChoices.get(Integer.parseInt(gameNumber));
             if (gameid !=null) {
                 server.joinGame(gameid, color);
+                webSocket=new WebSocketCommunicator();
                 if (color.equals("WHITE")) {
                     gamePlayScreen.whitePerspective();
                 } else if (color.equals("BLACK")) {
                     gamePlayScreen.blackPerspective();
                 }
+
             }
             else{
                 System.out.print("Game doesn't exist");
@@ -170,6 +174,7 @@ public class ChessClient {
         String gameNumber=scanner.nextLine();
         try{
             Integer gameid=gameChoices.get(Integer.parseInt(gameNumber));
+            webSocket=new WebSocketCommunicator();
             if (gameid !=null) {
                 gamePlayScreen.whitePerspective();
             }
