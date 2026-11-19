@@ -104,7 +104,7 @@ public class ServerFacadeTests {
         facade.joinGame(1,"WHITE");
         ServerFacade secondPerson=new ServerFacade(port);
         secondPerson.register("bill","ps","email2");
-        secondPerson.joinGame(1,"WHITE");
+        assertThrows(Exception.class,()->secondPerson.joinGame(1,"WHITE"));
         GameData game =facade.listGames().get(1);
         assertEquals("dyl",game.whiteUsername());
     }
